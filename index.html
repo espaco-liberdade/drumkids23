@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Kids - Lição 23: Aro de Caixa (Rim Click)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ESTILO VISUAL KIDS & NEON (ECRÃ) */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0f172a;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 2px, transparent 2px);
+            background-size: 40px 40px;
+            color: white;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        h1, h2, h3, .fun-font { font-family: 'Fredoka', cursive; }
+        .gpu-accelerated { transform: translateZ(0); will-change: transform; }
+        
+        /* Botões de Idioma - Com Imagens Reais */
+        .lang-active { opacity: 1; transform: scale(1.15); border-color: #f59e0b; background-color: rgba(245, 158, 11, 0.35); box-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
+        .lang-idle { opacity: 0.4; border-color: transparent; background-color: rgba(30, 41, 59, 0.5); }
+        .lang-idle:hover { opacity: 0.8; transform: scale(1.05); border-color: #475569; }
+
+        /* Cores Néon dos Instrumentos */
+        .neon-box-yellow { box-shadow: 0 0 10px rgba(250, 204, 21, 0.35), inset 0 0 5px rgba(250, 204, 21, 0.15); border-color: #facc15 !important; }
+        .neon-box-amber { box-shadow: 0 0 14px rgba(245, 158, 11, 0.5), inset 0 0 6px rgba(245, 158, 11, 0.25); border-color: #f59e0b !important; }
+        .neon-box-blue { box-shadow: 0 0 12px rgba(99, 102, 241, 0.45), inset 0 0 6px rgba(99, 102, 241, 0.2); border-color: #6366f1 !important; }
+        .neon-box-red { box-shadow: 0 0 12px rgba(239, 68, 68, 0.4), inset 0 0 5px rgba(239, 68, 68, 0.15); border-color: #ef4444 !important; }
+
+        .beat-active { transform: scale(1.18) translateZ(0); filter: brightness(1.6); z-index: 20; transition: transform 0.04s ease-out; }
+        .grid-btn { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); transform: translateZ(0); }
+        .grid-btn:active { transform: scale(0.92); }
+
+        /* Destaque da Coluna Atual no Modo Passo a Passo */
+        .step-column-highlight {
+            outline: 3px solid #f59e0b !important;
+            box-shadow: 0 0 18px rgba(245, 158, 11, 0.75) !important;
+            z-index: 15;
+        }
+
+        /* Luzes do Metrónomo */
+        .metronome-active { background-color: #f59e0b; box-shadow: 0 0 18px #f59e0b; transform: scale(1.18); border-color: #fef3c7 !important; }
+        .indicator-idle { background-color: #1e293b; opacity: 0.45; transform: scale(1); }
+
+        /* Badges Didáticos */
+        .badge-r { background-color: #eab308; color: #422006; }
+        .badge-rim { background-color: #f59e0b; color: #451a03; box-shadow: 0 0 8px rgba(245, 158, 11, 0.8); }
+        .badge-l { background-color: #6366f1; color: #ffffff; }
+        .badge-kick { background-color: #ef4444; color: #ffffff; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* ========================================================================= */
+        /* MODO DE IMPRESSÃO ECO A4 (FUNDO 100% BRANCO, LETRAS PRETAS, ZERO TINTA PRETA) */
+        /* ========================================================================= */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+            html, body {
+                background: #ffffff !important;
+                background-color: #ffffff !important;
+                background-image: none !important;
+                color: #000000 !important;
+                font-size: 11pt;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            /* Remove todos os fundos escuros, gradientes e sombras */
+            *, *::before, *::after {
+                background-color: transparent !important;
+                background-image: none !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+            /* Textos 100% pretos e legíveis */
+            h1, h2, h3, h4, p, span, li, strong, em, div {
+                color: #000000 !important;
+                -webkit-text-fill-color: #000000 !important;
+            }
+            /* Caixas e Secções com borda fina preta/cinza sob fundo branco */
+            .print-box, .bg-slate-800, .bg-slate-900, .bg-slate-900\/90, .bg-slate-800\/80 {
+                background: #ffffff !important;
+                border: 1.5px solid #000000 !important;
+                border-radius: 12px !important;
+            }
+            /* Grelha do Sequenciador no Papel Branco */
+            .grid-btn {
+                background: #ffffff !important;
+                border: 1.5px dashed #94a3b8 !important;
+                border-radius: 8px !important;
+            }
+            .neon-box-yellow, .neon-box-amber, .neon-box-blue, .neon-box-red {
+                background: #f8fafc !important;
+                border: 2.5px solid #000000 !important;
+            }
+            /* Etiquetas no papel */
+            .badge-r, .badge-rim, .badge-l, .badge-kick {
+                background: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #000000 !important;
+            }
+            /* Círculo de casa vazia visível no papel branco */
+            #row-hihatC svg circle[stroke="#fff"],
+            #row-rim svg circle[stroke="#fff"],
+            #row-snare svg circle[stroke="#fff"],
+            #row-kick svg circle[stroke="#fff"] {
+                stroke: #94a3b8 !important;
+            }
+            /* Infográfico SVG com Fundo Branco e Linhas Escuras na Impressão */
+            #svg-info-container {
+                background: #ffffff !important;
+                border: 1.5px solid #000000 !important;
+            }
+            .print-svg-bg, .print-svg-card {
+                fill: #ffffff !important;
+                stroke: #000000 !important;
+            }
+            .print-svg-SoftBox {
+                fill: #f8fafc !important;
+                stroke: #334155 !important;
+            }
+            #svg-info-container text {
+                fill: #000000 !important;
+            }
+            .print-break {
+                page-break-inside: avoid;
+                margin-bottom: 14px !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-2 sm:p-4 md:p-8" onload="initPage()">
+
+    <!-- CABEÇALHO EXCLUSIVO DE IMPRESSÃO A4 (Só aparece na folha impressa / PDF) -->
+    <div class="hidden print-only w-full max-w-5xl border-b-2 border-black pb-2 mb-4">
+        <div class="flex justify-between items-center text-xs font-bold">
+            <span>🥁 DRUM KIDS - FOLHA DE ESTUDO A4 (LIÇÃO 23: ARO DE CAIXA / RIM CLICK)</span>
+            <span>ALUNO(A): ___________________________________ DATA: ___/___/2026</span>
+        </div>
+    </div>
+
+    <!-- BARRA SUPERIOR: MENU, IMPRIMIR & IDIOMAS -->
+    <div class="w-full max-w-6xl flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mb-6 no-print">
+        
+        <div class="flex gap-2">
+            <a href="https://espaco-liberdade.github.io/drumkids" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border-2 border-slate-600 px-4 md:px-6 py-3 rounded-2xl font-bold transition-all flex items-center gap-2 fun-font text-lg md:text-xl shadow-lg">
+                <span>👈</span> <span id="t-backBtn">SUMÁRIO</span>
+            </a>
+            
+            <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 border-2 border-amber-200 px-4 py-3 rounded-2xl font-extrabold transition-all flex items-center gap-2 fun-font text-lg shadow-lg" title="Imprimir em Fundo Branco A4">
+                <span>🖨️</span> <span id="t-printBtn">IMPRIMIR (A4)</span>
+            </button>
+        </div>
+
+        <!-- Bandeiras de Idioma (Inicia em Português Ativo) -->
+        <div class="flex justify-end gap-2">
+            <button onclick="setLanguage('de')" id="lang-de" class="lang-idle border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center" title="Deutsch">
+                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-6 h-auto rounded-sm">
+            </button>
+            <button onclick="setLanguage('en')" id="lang-en" class="lang-idle border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center" title="English">
+                <img src="https://flagcdn.com/w40/us.png" alt="English" class="w-6 h-auto rounded-sm">
+            </button>
+            <button onclick="setLanguage('es')" id="lang-es" class="lang-idle border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center" title="Español">
+                <img src="https://flagcdn.com/w40/es.png" alt="Español" class="w-6 h-auto rounded-sm">
+            </button>
+            <button onclick="setLanguage('it')" id="lang-it" class="lang-idle border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center" title="Italiano">
+                <img src="https://flagcdn.com/w40/it.png" alt="Italiano" class="w-6 h-auto rounded-sm">
+            </button>
+            <button onclick="setLanguage('pt')" id="lang-pt" class="lang-active border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center" title="Português">
+                <img src="https://flagcdn.com/w40/br.png" alt="Português" class="w-6 h-auto rounded-sm">
+            </button>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO -->
+    <header class="text-center w-full max-w-4xl mb-6">
+        <h1 id="t-title" class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-cyan-400 fun-font mb-2 drop-shadow-lg">
+            Lição 23: Aro de Caixa
+        </h1>
+        <p id="t-subtitle" class="text-slate-300 font-bold uppercase tracking-widest text-sm md:text-base flex items-center justify-center gap-2">
+            <span>🥢</span> O som estalado de madeira no aro de metal ("TOC!")
+        </p>
+    </header>
+
+    <!-- PAINEL SUPERIOR: LUZES E BPM (NO PRINT) -->
+    <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-4 justify-between items-stretch mb-6 no-print">
+        
+        <!-- Indicador de Pulso + Monitor de Timbre (Aro TOC! vs Caixa TÁ!) -->
+        <div class="bg-slate-900/90 border-2 border-slate-700 p-3 md:p-4 rounded-2xl flex-1 flex flex-col justify-between gap-3 shadow-inner">
+            <div class="flex justify-around items-center">
+                <div class="text-left">
+                    <span id="t-tempo" class="text-[10px] md:text-xs font-bold text-slate-400 uppercase block">Tempo</span>
+                    <span id="beat-counter" class="text-2xl md:text-3xl font-bold fun-font text-amber-400">1</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div id="light-1" class="indicator-idle w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center text-[10px] font-bold transition-all duration-75">1</div>
+                    <div id="light-2" class="indicator-idle w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center text-[10px] font-bold transition-all duration-75">2</div>
+                    <div id="light-3" class="indicator-idle w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center text-[10px] font-bold transition-all duration-75">3</div>
+                    <div id="light-4" class="indicator-idle w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center text-[10px] font-bold transition-all duration-75">4</div>
+                </div>
+            </div>
+
+            <!-- Monitor Interativo: Aro (TOC!) vs Pele (TÁ!) -->
+            <div class="bg-slate-800/90 rounded-xl p-2 border border-slate-700 flex items-center justify-between px-3">
+                <div class="flex items-center gap-1.5">
+                    <span id="timbre-tag-rim" class="px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-slate-700 text-slate-400 transition-all">🥢 ARO (TOC!)</span>
+                    <span id="timbre-tag-snare" class="px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-slate-700 text-slate-400 transition-all">🥁 PELE (TÁ!)</span>
+                </div>
+                <div id="rim-status-display" class="fun-font font-bold text-xs md:text-sm text-amber-300 tracking-wider">
+                    🥢 RIM CLICK
+                </div>
+            </div>
+        </div>
+
+        <!-- Controlos Principais -->
+        <div class="bg-slate-800/90 backdrop-blur-md p-3 md:p-4 rounded-2xl shadow-xl flex-[2] border-2 border-slate-700 flex flex-wrap gap-3 justify-center items-center relative">
+            
+            <div id="t-iphone" class="absolute -top-3 right-4 bg-red-600 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg uppercase tracking-wider animate-pulse">
+                📱 Som iOS: Desative o Silencioso
+            </div>
+
+            <div class="flex gap-2">
+                <button id="playBtn" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 px-5 py-2 md:px-6 md:py-3 rounded-xl font-black shadow-lg transform active:scale-95 transition flex items-center gap-2 fun-font text-lg md:text-xl min-w-[115px] justify-center">
+                    <span id="playIcon">▶</span> <span id="t-play">TOCAR</span>
+                </button>
+
+                <!-- Botão Passo a Passo (Treinador Lento) -->
+                <button id="stepBtn" onclick="stepForward()" class="bg-slate-700 hover:bg-amber-900/60 text-amber-300 border-2 border-amber-500/50 px-3 py-2 md:px-4 md:py-3 rounded-xl font-bold shadow-lg transform active:scale-95 transition flex flex-col items-center justify-center" title="Treinador Passo a Passo">
+                    <span class="text-base md:text-lg leading-none">👣</span>
+                    <span id="t-stepBtn" class="text-[9px] md:text-[10px] uppercase tracking-wider mt-0.5">Passo</span>
+                </button>
+            </div>
+
+            <!-- Controlo de BPM com 3 Músicas Famosas -->
+            <div class="flex flex-col items-center bg-slate-900/50 px-3 py-2 rounded-xl border border-slate-700 flex-1 min-w-[190px]">
+                <div class="flex items-center gap-2 w-full justify-between mb-1">
+                    <label id="t-speed" class="text-[9px] md:text-[10px] text-slate-400 uppercase tracking-wider font-bold">Velocidade (BPM)</label>
+                    <span id="bpmDisplay" class="font-mono text-lg md:text-xl font-bold text-amber-400 bg-slate-800 px-2 rounded">89</span>
+                </div>
+                
+                <div class="flex items-center gap-2 mb-2 w-full">
+                    <span class="text-xs">🐢</span>
+                    <input type="range" id="bpm" min="50" max="150" value="89" class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                    <span class="text-xs">🐇</span>
+                </div>
+
+                <div class="flex gap-1 md:gap-2 w-full justify-between">
+                    <button onclick="setBPM(72)" class="text-[10px] md:text-xs bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded text-slate-300 transition flex-1 text-center font-bold">72 <span id="t-slow">Só Hoje</span></button>
+                    <button onclick="setBPM(89)" class="text-[10px] md:text-xs bg-amber-900/50 hover:bg-amber-800/80 border border-amber-700/50 px-2 py-1 rounded text-amber-300 transition flex-1 text-center font-bold">89 <span id="t-med">Bruno Mars</span></button>
+                    <button onclick="setBPM(117)" class="text-[10px] md:text-xs bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded text-slate-300 transition flex-1 text-center font-bold">117 <span id="t-fast">The Police</span></button>
+                </div>
+            </div>
+
+            <!-- Botão Metrónomo -->
+            <button id="metronomeBtn" onclick="toggleMetronome()" class="bg-slate-700 border-2 border-slate-600 hover:bg-slate-600 text-white px-3 py-2 md:px-4 rounded-xl font-bold shadow transition flex flex-col items-center justify-center h-full">
+                <span class="text-base md:text-lg">⏱️</span> 
+                <span id="t-click" class="text-[8px] md:text-[10px] uppercase">Click</span>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- BARRA DE EXPLICAÇÃO EM TEMPO REAL DO TREINADOR PASSO-A-PASSO -->
+    <div id="coach-banner" class="w-full max-w-5xl bg-gradient-to-r from-amber-950 via-slate-900 to-indigo-950 border-2 border-amber-500/40 rounded-2xl p-3 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg no-print">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl md:text-3xl">🤖</span>
+            <div>
+                <span id="t-coachTitle" class="text-[10px] uppercase tracking-widest text-amber-400 font-black block">Treinador Interativo de Aro de Caixa:</span>
+                <p id="coach-message" class="text-xs md:text-sm text-white font-bold">Clica em "👣 Passo" para ouvires o "TOC!" de madeira no aro de metal nos tempos 2 e 4!</p>
+            </div>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+            <span class="badge-rim px-2 py-1 rounded-md text-[10px] md:text-xs font-black" id="t-legendRim">TOC! = Aro de Metal</span>
+            <span class="badge-l px-2 py-1 rounded-md text-[10px] md:text-xs font-black" id="t-legendSnare">TÁ! = Pele da Caixa</span>
+        </div>
+    </div>
+
+    <!-- SEQUENCIADOR DE 8 PASSOS (1 e 2 e 3 e 4 e) -->
+    <div class="bg-slate-800 p-3 sm:p-5 md:p-6 rounded-2xl md:rounded-[2.5rem] shadow-2xl border-4 border-slate-700 w-full max-w-5xl relative mb-8 print-break print-box">
+        <div class="w-full">
+            
+            <!-- Seletor Pedagógico de Nível (Etapa 1 vs Etapa 2) -->
+            <div class="flex flex-wrap justify-between items-center gap-2 mb-4 ml-0 md:ml-[115px] pr-1 no-print">
+                <div class="flex flex-wrap gap-1.5">
+                    <button onclick="loadStage1()" id="btn-stage1" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1">
+                        <span>1️⃣</span> <span id="t-stage1Btn">Etapa 1: Relógio de Madeira (Bumbo 1 e 3 + Aro 2 e 4)</span>
+                    </button>
+                    <button onclick="loadLesson23()" id="btn-stage2" class="bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md">
+                        <span>2️⃣</span> <span id="t-stage2Btn">Etapa 2: Levada Pop / Balada (Bumbo no 1, 2e, 3)</span>
+                    </button>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="loadLesson23()" class="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30 text-[9px] md:text-xs font-bold border border-amber-900/50 px-2.5 py-1 rounded-lg transition"><span id="t-restore">RESTAURAR</span></button>
+                    <button onclick="clearGrid()" class="text-red-400 hover:text-red-300 hover:bg-red-900/30 text-[9px] md:text-xs font-bold border border-red-900/50 px-2.5 py-1 rounded-lg transition"><span id="t-clear">LIMPAR</span></button>
+                </div>
+            </div>
+
+            <!-- Marcadores de Tempo -->
+            <div class="flex items-end mb-3 ml-[58px] sm:ml-[78px] md:ml-[118px] border-b-4 border-slate-600 pb-2">
+                <div class="flex-1 text-center font-bold text-lg sm:text-2xl md:text-3xl fun-font bg-slate-900/60 text-slate-200 rounded-t mx-0.5 md:mx-1 pt-1 shadow-inner">1</div>
+                <div class="flex-1 text-center text-slate-400 font-bold text-sm sm:text-lg md:text-xl pt-2 mx-0.5 md:mx-1">e</div>
+                
+                <div class="flex-1 text-center font-bold text-lg sm:text-2xl md:text-3xl fun-font bg-amber-900/60 text-amber-300 border-b-2 border-amber-400 rounded-t mx-0.5 md:mx-1 pt-1 shadow-inner">2</div>
+                <div class="flex-1 text-center text-red-300 font-bold text-sm sm:text-lg md:text-xl pt-2 mx-0.5 md:mx-1 bg-red-950/30 rounded-t">e</div>
+                
+                <div class="flex-1 text-center font-bold text-lg sm:text-2xl md:text-3xl fun-font bg-slate-900/60 text-slate-200 rounded-t mx-0.5 md:mx-1 pt-1 shadow-inner">3</div>
+                <div class="flex-1 text-center text-slate-400 font-bold text-sm sm:text-lg md:text-xl pt-2 mx-0.5 md:mx-1">e</div>
+                
+                <div class="flex-1 text-center font-bold text-lg sm:text-2xl md:text-3xl fun-font bg-amber-900/60 text-amber-300 border-b-2 border-amber-400 rounded-t mx-0.5 md:mx-1 pt-1 shadow-inner">4</div>
+                <div class="flex-1 text-center text-slate-400 font-bold text-sm sm:text-lg md:text-xl pt-2 mx-0.5 md:mx-1">e</div>
+            </div>
+
+            <!-- LINHA 1: CHIMBAL FECHADO -->
+            <div class="flex items-center mb-2 md:mb-3 p-1.5 md:p-2 rounded-2xl bg-slate-900/40 border-2 border-slate-700/50 print-box">
+                <div class="w-[52px] sm:w-[70px] md:w-[108px] flex-shrink-0 text-center border-r-2 border-slate-700 mr-1.5 md:mr-3 flex flex-col items-center justify-center">
+                    <div class="w-7 h-7 md:w-11 md:h-11 mb-0.5">
+                        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md"><line x1="50" y1="20" x2="50" y2="90" stroke="#9ca3af" stroke-width="4"/><ellipse cx="50" cy="45" rx="35" ry="6" fill="#fef08a" stroke="#eab308" stroke-width="3"/><ellipse cx="50" cy="40" rx="35" ry="6" fill="#fef08a" stroke="#eab308" stroke-width="3"/></svg>
+                    </div>
+                    <span id="t-instHihatC" class="text-[6px] md:text-[9px] font-bold text-yellow-400 uppercase hidden sm:block tracking-wider">CHIMBAL</span>
+                </div>
+                <div id="row-hihatC" class="flex-1 flex items-center"></div>
+            </div>
+
+            <!-- LINHA 2: ARO DE CAIXA (RIM CLICK / CROSS-STICK 🥢) -->
+            <div class="flex items-center mb-2 md:mb-3 p-1.5 md:p-2 rounded-2xl bg-amber-950/30 border-2 border-amber-500/50 print-box">
+                <div class="w-[52px] sm:w-[70px] md:w-[108px] flex-shrink-0 text-center border-r-2 border-amber-700/60 mr-1.5 md:mr-3 flex flex-col items-center justify-center">
+                    <div class="w-7 h-7 md:w-11 md:h-11 mb-0.5">
+                        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                            <rect x="15" y="42" width="70" height="24" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="5"/>
+                            <!-- Símbolo X clássico de Aro na partitura + baqueta apoiada -->
+                            <line x1="18" y1="42" x2="82" y2="24" stroke="#F59E0B" stroke-width="7" stroke-linecap="round"/>
+                            <line x1="25" y1="22" x2="45" y2="42" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="45" y1="22" x2="25" y2="42" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span id="t-instRim" class="text-[6px] md:text-[9px] font-bold text-amber-400 uppercase hidden sm:block tracking-wider">ARO (TOC!)</span>
+                </div>
+                <div id="row-rim" class="flex-1 flex items-center"></div>
+            </div>
+
+            <!-- LINHA 3: CAIXA NORMAL (PELE - OPCIONAL P/ COMPARAR OU CRIAR VIRADAS) -->
+            <div class="flex items-center mb-2 md:mb-3 p-1.5 md:p-2 rounded-2xl bg-slate-900/40 border-2 border-slate-700/50 print-box">
+                <div class="w-[52px] sm:w-[70px] md:w-[108px] flex-shrink-0 text-center border-r-2 border-slate-700 mr-1.5 md:mr-3 flex flex-col items-center justify-center">
+                    <div class="w-7 h-7 md:w-11 md:h-11 mb-0.5">
+                        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md"><rect x="15" y="35" width="70" height="30" rx="3" fill="#E0E7FF" stroke="#4F46E5" stroke-width="5"/><line x1="15" y1="50" x2="85" y2="50" stroke="#4F46E5" stroke-width="2"/><line x1="30" y1="15" x2="70" y2="35" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/></svg>
+                    </div>
+                    <span id="t-instSnare" class="text-[6px] md:text-[9px] font-bold text-indigo-400 uppercase hidden sm:block tracking-wider">CAIXA (TÁ!)</span>
+                </div>
+                <div id="row-snare" class="flex-1 flex items-center"></div>
+            </div>
+
+            <!-- LINHA 4: BUMBO -->
+            <div class="flex items-center p-1.5 md:p-2 rounded-2xl bg-slate-900/40 border-2 border-slate-700/50 print-box">
+                <div class="w-[52px] sm:w-[70px] md:w-[108px] flex-shrink-0 text-center border-r-2 border-slate-700 mr-1.5 md:mr-3 flex flex-col items-center justify-center">
+                    <div class="w-7 h-7 md:w-11 md:h-11 mb-0.5">
+                        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md"><circle cx="50" cy="50" r="35" fill="#FEE2E2" stroke="#ef4444" stroke-width="6"/><rect x="55" y="60" width="10" height="25" rx="2" fill="#374151" transform="rotate(-15 55 80)"/><line x1="50" y1="50" x2="60" y2="75" stroke="#374151" stroke-width="6"/></svg>
+                    </div>
+                    <span id="t-instKick" class="text-[6px] md:text-[9px] font-bold text-red-400 uppercase hidden sm:block tracking-wider">BUMBO</span>
+                </div>
+                <div id="row-kick" class="flex-1 flex items-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INSTRUÇÕES E CANTO -->
+    <div class="w-full max-w-5xl bg-gradient-to-r from-slate-800 to-slate-900 border-l-4 border-amber-500 p-4 md:p-6 rounded-2xl shadow-xl gpu-accelerated mb-8 print-break print-box">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base text-slate-300">
+            <div>
+                <h3 class="text-white font-bold fun-font text-xl md:text-2xl mb-4 flex items-center gap-2">
+                    <span class="mr-2">💡</span><span id="t-howRead">COMO LER ESTA PARTITURA</span>
+                </h3>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-xl">🥢</span>
+                        <span id="t-rule1"><strong class="text-amber-400">O que é o Aro de Caixa (Rim Click)?</strong> Em vez de bateres no meio da pele para fazer um barulhão ("TÁ!"), apoias a palma da mão esquerda na pele e bates com o corpo da baqueta na <strong>borda de metal</strong> da Caixa! Faz um som lindo de madeira: <strong>"TOC!"</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg viewBox="0 0 100 100" class="w-6 h-6 flex-shrink-0"><rect x="15" y="42" width="70" height="24" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="5"/><line x1="18" y1="42" x2="82" y2="24" stroke="#F59E0B" stroke-width="7" stroke-linecap="round"/></svg>
+                        <span id="t-rule2"><strong class="text-yellow-300">Aro nos Tempos 2 e 4:</strong> A tua Mão Esquerda toca o Aro (<strong>TOC!</strong>) nos números <strong>2</strong> e <strong>4</strong>. Se quiseres testar a diferença, clica na linha da Caixa Normal abaixo para comparar o som!</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg viewBox="0 0 100 100" class="w-6 h-6 flex-shrink-0"><circle cx="50" cy="50" r="35" fill="#FEE2E2" stroke="#ef4444" stroke-width="6"/><rect x="55" y="60" width="10" height="25" rx="2" fill="#374151" transform="rotate(-15 55 80)"/><line x1="50" y1="50" x2="60" y2="75" stroke="#374151" stroke-width="6"/></svg>
+                        <span id="t-rule3"><strong class="text-red-400">O Balanço do Bumbo:</strong> Na Etapa 2, o Bumbo toca no <strong>1</strong>, no <strong>'e' do 2</strong> e no <strong>3</strong>, criando a batida perfeita de baladas Pop e Reggae!</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 flex flex-col justify-center text-center shadow-inner print-box">
+                <h3 class="text-amber-400 font-bold fun-font text-xl md:text-2xl mb-2 flex items-center justify-center">
+                    <span class="mr-2">🎤</span> <span id="t-vocalTitle">CANTE O RITMO:</span>
+                </h3>
+                <p id="t-vocalSub" class="text-slate-400 mb-3 text-sm italic">Troca o grito "TÁ!" pelo estalinho "TOC!" nos tempos 2 e 4!</p>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-600 print-box">
+                    <p id="t-vocalText" class="text-base md:text-xl font-bold text-white fun-font tracking-wider leading-relaxed">
+                        <span class="text-red-400">BUM</span> - tss, <span class="text-amber-400">TOC!</span> - <span class="text-red-400">BUM</span>,<br>
+                        <span class="text-red-400">BUM</span> - tss, <span class="text-amber-400">TOC!</span> - tss
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INFOGRÁFICO TÉCNICO PASSO A PASSO EMBUTIDO (OTIMIZADO P/ ECRÃ E IMPRESSÃO BRANCA A4) -->
+    <div class="w-full max-w-5xl bg-slate-900 border-4 border-amber-500/60 p-4 sm:p-6 md:p-8 rounded-[2.5rem] shadow-2xl mb-10 print-break print-box">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300 fun-font flex items-center gap-2">
+                <span>📐</span> <span id="t-infoTitle">Infográfico Técnico: A Ponte da Mão Esquerda no Aro</span>
+            </h2>
+            
+            <div class="no-print">
+                <input type="file" id="custom-info-upload" class="hidden" accept="image/*" onchange="loadCustomInfographic(event)">
+                <button onclick="document.getElementById('custom-info-upload').click()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/50 text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                    <span>🖼️</span> <span id="t-uploadInfoBtn">Usar Imagem Salva do Dispositivo</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="custom-info-container" class="hidden mb-4 text-center">
+            <img id="custom-info-img" src="" alt="Infográfico Aula 23" class="w-full rounded-2xl border-2 border-amber-500/40 shadow-lg max-h-[550px] object-contain mx-auto">
+            <button onclick="resetInfographic()" class="mt-2 text-xs text-red-400 hover:underline no-print" id="t-resetInfoBtn">Voltar ao Infográfico Interativo Multilíngue</button>
+        </div>
+
+        <!-- INFOGRÁFICO VETORIAL EMBUTIDO (Fundo escuro no ecrã, Fundo 100% Branco na Impressão A4) -->
+        <div id="svg-info-container" class="w-full bg-[#131c31] rounded-2xl border-2 border-slate-700 p-2 md:p-4 overflow-hidden shadow-inner">
+            <svg viewBox="0 0 1000 520" class="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                <!-- Fundo Geral -->
+                <rect class="print-svg-bg" x="0" y="0" width="1000" height="520" rx="18" fill="#0f172a"/>
+                <line x1="490" y1="20" x2="490" y2="500" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 6" opacity="0.45"/>
+
+                <!-- ========================================================= -->
+                <!-- QUADRO 1: A PONTE DA MÃO ESQUERDA (ESQUERDA)              -->
+                <!-- ========================================================= -->
+                <rect class="print-svg-card" x="20" y="35" width="450" height="465" rx="18" fill="#1e293b" stroke="#f59e0b" stroke-width="3"/>
+                <rect class="print-svg-card" x="45" y="18" width="400" height="36" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5"/>
+                <text id="svg-p1-title" x="245" y="42" text-anchor="middle" fill="#ffffff" font-family="Fredoka, sans-serif" font-weight="700" font-size="16">1. A "PONTE" DA MÃO ESQUERDA (VISTA DE LADO)</text>
+
+                <!-- Ilustração Vista de Lado da Caixa + Mão em Ponte -->
+                <rect class="print-svg-SoftBox" x="40" y="70" width="410" height="235" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5"/>
+                
+                <!-- Corpo da Caixa -->
+                <rect x="65" y="210" width="320" height="55" rx="6" fill="#e0e7ff" stroke="#4f46e5" stroke-width="4"/>
+                <!-- Aros de Metal nas pontas (Cinza/Dourado) -->
+                <rect x="58" y="200" width="18" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+                <rect x="374" y="200" width="22" height="22" rx="4" fill="#fbbf24" stroke="#b45309" stroke-width="3"/>
+
+                <!-- Ponta da baqueta apoiada na pele à esquerda + Cabo levantado sobre o aro direito -->
+                <line x1="120" y1="206" x2="415" y2="145" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                <!-- Pivô fixo na pele -->
+                <circle cx="120" cy="206" r="8" fill="#ef4444"/>
+                <text id="svg-p1-pivot" x="135" y="185" text-anchor="middle" fill="#fca5a5" font-family="Fredoka, sans-serif" font-weight="700" font-size="13">1. Ponta colada na pele</text>
+
+                <!-- Mão Esquerda em formato de "Ponte" -->
+                <path d="M 210 205 Q 245 145 280 172" fill="none" stroke="#fdba74" stroke-width="22" stroke-linecap="round"/>
+                <text id="svg-p1-palm" x="235" y="132" text-anchor="middle" fill="#fde68a" font-family="Fredoka, sans-serif" font-weight="700" font-size="14">2. Palma pousada na pele</text>
+
+                <!-- Seta de descida no Aro de Metal -->
+                <path d="M 385 120 L 385 185" stroke="#f59e0b" stroke-width="4" stroke-dasharray="5 3"/>
+                <polygon points="385,194 377,180 393,180" fill="#f59e0b"/>
+                <text id="svg-p1-hit" x="385" y="108" text-anchor="middle" fill="#fbbf24" font-family="Fredoka, sans-serif" font-weight="700" font-size="22">"TOC!" 💥</text>
+                <text id="svg-p1-rimLabel" x="225" y="290" text-anchor="middle" fill="#ffffff" font-family="Nunito, sans-serif" font-weight="800" font-size="13">3. Só os dedos levantam e descem a baqueta contra o ARO DE METAL!</text>
+
+                <!-- Resumo Passo a Passo em baixo -->
+                <rect class="print-svg-SoftBox" x="40" y="320" width="410" height="160" rx="14" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                <text id="svg-p1-boxTitle" x="245" y="350" text-anchor="middle" fill="#fbbf24" font-family="Fredoka, sans-serif" font-weight="700" font-size="17">Porque é que a mão fica encostada na pele?</text>
+                <text id="svg-p1-boxL1" x="245" y="382" text-anchor="middle" fill="#cbd5e1" font-family="Nunito, sans-serif" font-weight="700" font-size="13.5">Se tirares a mão da pele, a caixa fica a vibrar ("boooing").</text>
+                <text id="svg-p1-boxL2" x="245" y="410" text-anchor="middle" fill="#ffffff" font-family="Nunito, sans-serif" font-weight="900" font-size="14">Com o pulso apoiado na pele, abafas o tambor e tiras</text>
+                <text id="svg-p1-boxL3" x="245" y="438" text-anchor="middle" fill="#fde047" font-family="Nunito, sans-serif" font-weight="800" font-size="14">aquele estalo seco de madeira igual a um relógio ("TOC!")!</text>
+
+                <!-- ========================================================= -->
+                <!-- QUADRO 2: O TRUQUE DE VIRAR A BAQUETA (TOPO DIREITA)      -->
+                <!-- ========================================================= -->
+                <rect class="print-svg-card" x="515" y="35" width="465" height="215" rx="18" fill="#1e293b" stroke="#06b6d4" stroke-width="3"/>
+                <rect class="print-svg-card" x="545" y="18" width="405" height="36" rx="10" fill="#0f172a" stroke="#06b6d4" stroke-width="2.5"/>
+                <text id="svg-p2-title" x="747" y="42" text-anchor="middle" fill="#ffffff" font-family="Fredoka, sans-serif" font-weight="700" font-size="16">2. O TRUQUE SECRETO: VIRA A BAQUETA AO CONTRÁRIO!</text>
+
+                <g transform="translate(540, 75)">
+                    <rect class="print-svg-SoftBox" x="0" y="0" width="415" height="145" rx="14" fill="#0f172a" stroke="#06b6d4" stroke-width="2.5"/>
+                    <!-- Desenho da Baqueta Invertida -->
+                    <line x1="65" y1="65" x2="345" y2="65" stroke="#fcd34d" stroke-width="14" stroke-linecap="round"/>
+                    <!-- Ponta fina na esquerda -->
+                    <ellipse cx="60" cy="65" rx="10" ry="7" fill="#fef08a"/>
+                    <text id="svg-p2-tip" x="95" y="40" text-anchor="middle" fill="#94a3b8" font-family="Nunito, sans-serif" font-weight="800" font-size="13">Ponta Fina (Na Pele)</text>
+                    <!-- Cabo grosso na direita -->
+                    <rect x="315" y="56" width="38" height="18" rx="4" fill="#f59e0b"/>
+                    <text id="svg-p2-butt" x="310" y="40" text-anchor="middle" fill="#fde047" font-family="Fredoka, sans-serif" font-weight="700" font-size="14">Cabo Grosso (No Aro!)</text>
+
+                    <text id="svg-p2-sub1" x="207" y="105" text-anchor="middle" fill="#ffffff" font-family="Nunito, sans-serif" font-weight="800" font-size="13.5">Bater no aro com a parte grossa (o cabo da baqueta)</text>
+                    <text id="svg-p2-sub2" x="207" y="128" text-anchor="middle" fill="#67e8f9" font-family="Nunito, sans-serif" font-weight="900" font-size="14">faz o som "TOC!" sair 2 vezes mais bonito e encorpado!</text>
+                </g>
+
+                <!-- ========================================================= -->
+                <!-- QUADRO 3: ESTROFE (ARO) vs. REFRÃO (CAIXA) (BAIXO DIREITA)-->
+                <!-- ========================================================= -->
+                <rect class="print-svg-card" x="515" y="275" width="465" height="225" rx="18" fill="#1e293b" stroke="#6366f1" stroke-width="3"/>
+                <rect class="print-svg-card" x="545" y="258" width="405" height="36" rx="10" fill="#0f172a" stroke="#6366f1" stroke-width="2.5"/>
+                <text id="svg-p3-title" x="747" y="282" text-anchor="middle" fill="#ffffff" font-family="Fredoka, sans-serif" font-weight="700" font-size="16">3. QUANDO USAR O ARO NUMA MÚSICA REAL?</text>
+
+                <g transform="translate(540, 310)">
+                    <!-- Caixa 1: Estrofe (Aro) -->
+                    <rect class="print-svg-SoftBox" x="0" y="0" width="190" height="135" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5"/>
+                    <text id="svg-p3-vTitle" x="95" y="30" text-anchor="middle" fill="#fbbf24" font-family="Fredoka, sans-serif" font-weight="700" font-size="16">1º NA ESTROFE (Calma)</text>
+                    <text x="95" y="75" text-anchor="middle" fill="#ffffff" font-family="Fredoka, sans-serif" font-weight="700" font-size="28">🥢 "TOC!"</text>
+                    <text id="svg-p3-vSub" x="95" y="112" text-anchor="middle" fill="#fde68a" font-family="Nunito, sans-serif" font-weight="800" font-size="13">Quando o cantor começa suave</text>
+
+                    <text x="208" y="75" text-anchor="middle" fill="#818cf8" font-family="Fredoka, sans-serif" font-weight="700" font-size="26">➔</text>
+
+                    <!-- Caixa 2: Refrão (Caixa Normal) -->
+                    <rect class="print-svg-SoftBox" x="225" y="0" width="190" height="135" rx="14" fill="#0f172a" stroke="#6366f1" stroke-width="2.5"/>
+                    <text id="svg-p3-cTitle" x="320" y="30" text-anchor="middle" fill="#818cf8" font-family="Fredoka, sans-serif" font-weight="700" font-size="16">2º NO REFRÃO (Explosão)</text>
+                    <text x="320" y="75" text-anchor="middle" fill="#ffffff" font-family="Fredoka, sans-serif" font-weight="700" font-size="28">🥁 "TÁ!"</text>
+                    <text id="svg-p3-cSub" x="320" y="112" text-anchor="middle" fill="#c7d2fe" font-family="Nunito, sans-serif" font-weight="800" font-size="13">Soltas o aro e bates na pele!</text>
+                </g>
+
+                <text id="svg-p3-bottomText" x="747" y="480" text-anchor="middle" fill="#fde047" font-family="Nunito, sans-serif" font-weight="900" font-size="13.5">Experimenta trocar do Aro para a Caixa no meio da música!</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- DICA DO PROFESSOR (TÉCNICA AVANÇADA PARA CRIANÇAS) -->
+    <div class="w-full max-w-5xl bg-slate-900/90 border-4 border-amber-500/50 p-6 md:p-10 rounded-[3rem] shadow-2xl mb-12 print-break print-box">
+        <h2 class="text-3xl md:text-4xl font-bold text-amber-400 fun-font mb-6 text-center flex justify-center items-center gap-3">
+            <span class="mr-2">👨‍🏫</span> <span id="t-tipTitle">Dicas do Professor</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-600 shadow-lg print-box">
+                <div class="text-5xl mb-3 text-center">🌉</div>
+                <h3 id="t-tip1" class="text-lg font-bold text-white mb-2 text-center">1. A Ponte dos Dedos</h3>
+                <p id="t-tip1Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed text-justify">Não levantes a mão toda da Caixa para bater no aro! A palma da tua mão esquerda e a ponta da baqueta ficam sempre coladas na pele. Só os dedos levantam a outra ponta da baqueta como uma ponte levadiça!</p>
+            </div>
+            
+            <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-600 shadow-lg print-box">
+                <div class="text-5xl mb-3 text-center">🎯</div>
+                <h3 id="t-tip2" class="text-lg font-bold text-white mb-2 text-center">2. O Ponto Doce (Sweet Spot)</h3>
+                <p id="t-tip2Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed text-justify">Experimenta deslizar a baqueta um pouquinho mais para a frente ou para trás sobre o aro de metal até encontrares o ponto onde o <strong>"TOC!"</strong> soa mais alto e bonito. Cada caixa tem o seu ponto mágico!</p>
+            </div>
+
+            <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-600 shadow-lg print-box">
+                <div class="text-5xl mb-3 text-center">🖨️</div>
+                <h3 id="t-tip3" class="text-lg font-bold text-white mb-2 text-center">3. Imprime em Fundo Branco</h3>
+                <p id="t-tip3Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed text-justify">Clica em <strong>"🖨️ IMPRIMIR (A4)"</strong> no topo! A folha é impressa com fundo 100% branco e linhas pretas para economizares tinta e colecionares todas as aulas numa pasta.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOBRE A AULA (MÚSICAS FAMOSAS E BPM EXATO PARA TREINAR) -->
+    <div class="w-full max-w-5xl bg-slate-800/80 border border-slate-700 p-4 md:p-8 rounded-3xl shadow-xl gpu-accelerated mb-8 print-break print-box">
+        <h3 class="text-white font-bold fun-font text-2xl md:text-3xl mb-6 flex items-center gap-3 border-b border-slate-700 pb-3">
+            <span class="mr-2">🧒</span> <span id="t-aboutTitle">Conversa de Baterista: Que Músicas Tocar?</span>
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm md:text-base text-slate-300 leading-relaxed">
+            
+            <div class="space-y-5">
+                <div>
+                    <h4 id="t-aboutDesc1" class="text-amber-400 font-bold mb-1 uppercase tracking-wider">O Som das Músicas Acústicas e Baladas!</h4>
+                    <p id="t-aboutDesc1Text">Quando uma música começa só com violão ou piano e a voz do cantor bem suave, bater na pele da Caixa seria barulhento demais! Por isso os bateristas usam o <strong>Aro de Caixa (Rim Click)</strong> para marcar os tempos 2 e 4 com delicadeza e muito estilo.</p>
+                </div>
+                
+                <div>
+                    <h4 id="t-aboutDesc2" class="text-amber-400 font-bold mb-1 uppercase tracking-wider">3 Músicas Famosas com este Ritmo e BPM!</h4>
+                    <p id="t-aboutDesc2Text">
+                        • <strong>A 72 BPM (Botão Só Hoje):</strong> Tocas exatamente a levada da estrofe do clássico nacional <em>"Só Hoje"</em> (Jota Quest) ou de <em>"Knockin' on Heaven's Door"</em> (Guns N' Roses / Bob Dylan)!<br>
+                        • <strong>A 89 BPM (Botão Bruno Mars):</strong> Tocas no tempo exato da famosa música <em>"Count on Me"</em> (Bruno Mars) e de <em>"Someone Like You"</em> / <em>"Hello"</em> (Adele)!<br>
+                        • <strong>A 117 BPM (Botão The Police):</strong> Tocas o lendário ritmo no aro de <em>"Every Breath You Take"</em> da banda The Police!
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/50 p-6 rounded-2xl border border-amber-500/30 flex flex-col justify-center shadow-inner print-box">
+                <h4 id="t-challengeTitle" class="text-yellow-400 font-bold mb-3 uppercase tracking-wider text-lg flex items-center gap-2">
+                    🏆 O Desafio "Estrofe & Refrão"
+                </h4>
+                <p id="t-challengeText" class="text-sm md:text-base">
+                    <strong>Missão 1:</strong> Começa na <strong>Etapa 1</strong> a <strong>72 BPM (Só Hoje)</strong> e treina tirar um som limpo de madeira ("TOC!") no aro da tua caixa nos tempos 2 e 4.<br><br>
+                    <strong>Missão 2:</strong> Muda para a <strong>Etapa 2</strong>, clica no botão <strong>89 BPM (Bruno Mars)</strong> e toca 4 compassos no <strong>Aro (Estrofe)</strong> e depois 4 compassos batendo na <strong>Pele da Caixa (Refrão)</strong>!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM MENU BUTTON -->
+    <div class="w-full max-w-6xl flex justify-center mb-8 mt-4 no-print">
+        <a href="https://espaco-liberdade.github.io/drumkids" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 border-2 border-amber-300 px-8 py-4 rounded-full font-black transition-all flex items-center gap-3 fun-font text-xl md:text-2xl shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.7)] transform hover:-translate-y-1">
+            <span>🏠</span> <span id="t-backBtnBottom">VOLTAR AO MENU PRINCIPAL</span>
+        </a>
+    </div>
+
+    <!-- COPYRIGHT FOOTER -->
+    <footer class="w-full max-w-5xl mb-4 text-center border-t border-slate-800 pt-6">
+        <p id="t-footer" class="text-xs text-slate-500 font-bold tracking-widest uppercase opacity-60">
+            © 2026 Olavo Galerani de Almeida. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <!-- SVGs Ocultos para o Grid -->
+    <div style="display:none;">
+        <svg id="svg-hihatC" viewBox="0 0 100 100" class="w-full h-full p-1 md:p-2">
+            <line x1="50" y1="20" x2="50" y2="90" stroke="#9ca3af" stroke-width="4"/>
+            <ellipse cx="50" cy="45" rx="35" ry="6" fill="#fef08a" stroke="#eab308" stroke-width="3"/>
+            <ellipse cx="50" cy="40" rx="35" ry="6" fill="#fef08a" stroke="#eab308" stroke-width="3"/>
+        </svg>
+        <svg id="svg-rim" viewBox="0 0 100 100" class="w-full h-full p-1 md:p-2">
+            <rect x="15" y="42" width="70" height="24" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width="5"/>
+            <line x1="18" y1="42" x2="82" y2="24" stroke="#F59E0B" stroke-width="7" stroke-linecap="round"/>
+            <line x1="25" y1="22" x2="45" y2="42" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+            <line x1="45" y1="22" x2="25" y2="42" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <svg id="svg-snare" viewBox="0 0 100 100" class="w-full h-full p-1 md:p-2">
+            <rect x="15" y="35" width="70" height="30" rx="3" fill="#E0E7FF" stroke="#4F46E5" stroke-width="5"/>
+            <line x1="15" y1="50" x2="85" y2="50" stroke="#4F46E5" stroke-width="2"/>
+            <line x1="30" y1="15" x2="70" y2="35" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        <svg id="svg-kick" viewBox="0 0 100 100" class="w-full h-full p-1 md:p-2">
+            <circle cx="50" cy="50" r="35" fill="#FEE2E2" stroke="#ef4444" stroke-width="6"/>
+            <rect x="55" y="60" width="10" height="25" rx="2" fill="#374151" transform="rotate(-15 55 80)"/>
+            <line x1="50" y1="50" x2="60" y2="75" stroke="#374151" stroke-width="6"/>
+        </svg>
+        <svg id="svg-empty" viewBox="0 0 100 100" class="w-full h-full opacity-25 p-1 md:p-2">
+            <circle cx="50" cy="50" r="10" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 2"/>
+        </svg>
+    </div>
+
+    <script>
+        // ========================================================
+        // INIT PAGE (PADRÃO INICIAL EM PORTUGUÊS 'pt')
+        // ========================================================
+        let currentLang = 'pt';
+        let currentStage = 2; // 1 = Relógio de Madeira (1 e 3), 2 = Levada Pop/Balada (1, 2e, 3)
+
+        function initPage() {
+            setLanguage('pt'); // Inicia sempre em Português por padrão!
+            loadLesson23();
+        }
+
+        // ========================================================
+        // ÁUDIO E SINTETIZADORES FIÉIS AO CURSO + RIM CLICK REALISTA
+        // ========================================================
+        let audioCtx;
+        let audioUnlocked = false;
+
+        function initAudio() {
+            if (audioUnlocked) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const buffer = audioCtx.createBuffer(1, 1, 22050);
+            const source = audioCtx.createBufferSource();
+            source.buffer = buffer; source.connect(audioCtx.destination); source.start(0);
+            audioUnlocked = true;
+        }
+
+        document.body.addEventListener('touchstart', initAudio, { once: true });
+        document.body.addEventListener('click', initAudio, { once: true });
+
+        function playHiHatC(time) {
+            const bufferSize = audioCtx.sampleRate * 0.09; 
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+            const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
+            const bandpass = audioCtx.createBiquadFilter(); bandpass.type = 'bandpass'; bandpass.frequency.value = 10000;
+            const gain = audioCtx.createGain();
+            noise.connect(bandpass); bandpass.connect(gain); gain.connect(audioCtx.destination);
+            gain.gain.setValueAtTime(0.48, time); gain.gain.exponentialRampToValueAtTime(0.01, time + 0.05); 
+            noise.start(time);
+        }
+
+        // Sintetizador do Aro de Caixa (Rim Click / Cross-Stick): Som seco e estalado de madeira no metal ("TOC!")
+        function playRimClick(time) {
+            // 1. Ressonância oca de madeira da baqueta (Triangle ~ 520Hz + 1280Hz)
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const oscGain = audioCtx.createGain();
+            osc1.type = 'triangle';
+            osc2.type = 'sine';
+            osc1.frequency.setValueAtTime(520, time);
+            osc1.frequency.exponentialRampToValueAtTime(340, time + 0.045);
+            osc2.frequency.setValueAtTime(1450, time);
+            osc2.frequency.exponentialRampToValueAtTime(900, time + 0.035);
+
+            osc1.connect(oscGain);
+            osc2.connect(oscGain);
+            oscGain.connect(audioCtx.destination);
+            oscGain.gain.setValueAtTime(1.1, time);
+            oscGain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+            osc1.start(time); osc1.stop(time + 0.05);
+            osc2.start(time); osc2.stop(time + 0.05);
+
+            // 2. Transiente de impacto curto (Click metálico no aro)
+            const bufferSize = audioCtx.sampleRate * 0.035;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            const bandpass = audioCtx.createBiquadFilter();
+            bandpass.type = 'bandpass';
+            bandpass.frequency.value = 2600;
+            bandpass.Q.value = 3.5;
+            const noiseGain = audioCtx.createGain();
+            noise.connect(bandpass);
+            bandpass.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            noiseGain.gain.setValueAtTime(0.9, time);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, time + 0.035);
+            noise.start(time);
+        }
+
+        function playSnare(time) {
+            const osc = audioCtx.createOscillator(); const oscGain = audioCtx.createGain();
+            osc.type = 'sine'; osc.connect(oscGain); oscGain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(300, time); osc.frequency.exponentialRampToValueAtTime(150, time + 0.1);
+            oscGain.gain.setValueAtTime(1.2, time); oscGain.gain.exponentialRampToValueAtTime(0.01, time + 0.1);
+            osc.start(time); osc.stop(time + 0.1);
+
+            const bufferSize = audioCtx.sampleRate * 0.25; 
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+            const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter(); filter.type = 'highpass'; filter.frequency.value = 1500;
+            const noiseGain = audioCtx.createGain();
+            noise.connect(filter); filter.connect(noiseGain); noiseGain.connect(audioCtx.destination);
+            noiseGain.gain.setValueAtTime(1, time); noiseGain.gain.exponentialRampToValueAtTime(0.01, time + 0.25);
+            noise.start(time);
+        }
+
+        function playKick(time) {
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(150, time); osc.frequency.exponentialRampToValueAtTime(0.01, time + 0.5); 
+            gain.gain.setValueAtTime(1, time); gain.gain.exponentialRampToValueAtTime(0.01, time + 0.5);
+            osc.start(time); osc.stop(time + 0.5);
+        }
+
+        function playClick(time, isAccent) {
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(isAccent ? 1200 : 800, time);
+            gain.gain.setValueAtTime(0.5, time); gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+            osc.start(time); osc.stop(time + 0.05);
+        }
+
+        // ========================================================
+        // ESTADO DO SEQUENCIADOR DE 8 PASSOS (1 e 2 e 3 e 4 e)
+        // ========================================================
+        const STEPS = 8;
+        let isPlaying = false; 
+        let isMetronomeOn = false; 
+        let currentStep = 0; 
+        let manualStepCursor = -1;
+        let nextNoteTime = 0.0; 
+        let bpm = 89;
+        
+        let grid = { 
+            hihatC: [1,1,1,1,1,1,1,1], 
+            rim:    [0,0,1,0,0,0,1,0], 
+            snare:  [0,0,0,0,0,0,0,0], 
+            kick:   [1,0,0,1,1,0,0,0] 
+        };
+
+        const svgHihatC = document.getElementById('svg-hihatC').outerHTML;
+        const svgRim = document.getElementById('svg-rim').outerHTML;
+        const svgSnare = document.getElementById('svg-snare').outerHTML;
+        const svgKick = document.getElementById('svg-kick').outerHTML;
+        const svgEmpty = document.getElementById('svg-empty').outerHTML;
+
+        function getHandLabels() {
+            const map = {
+                pt: { r: 'D', l: 'E', rim: 'TOC!', rimTag: '🥢 ARO (TOC!)', snareTag: '🥁 PELE (TÁ!)' },
+                en: { r: 'R', l: 'L', rim: 'CLICK!', rimTag: '🥢 RIM (CLICK!)', snareTag: '🥁 HEAD (KA!)' },
+                es: { r: 'D', l: 'I', rim: '¡TOC!', rimTag: '🥢 ARO (¡TOC!)', snareTag: '🥁 PARCHE (¡TA!)' },
+                it: { r: 'D', l: 'S', rim: 'TOC!', rimTag: '🥢 BORDO (TOC!)', snareTag: '🥁 PELLE (TA!)' },
+                de: { r: 'R', l: 'L', rim: 'KLICK!', rimTag: '🥢 RAND (KLICK!)', snareTag: '🥁 FELL (PA!)' }
+            };
+            return map[currentLang] || map.pt;
+        }
+
+        function createRow(inst, id, activeSvg) {
+            const container = document.getElementById(id); 
+            container.innerHTML = '';
+            const labels = getHandLabels();
+
+            grid[inst].forEach((state, i) => {
+                const btn = document.createElement('button'); 
+                const isMainBeat = (i % 2 === 0);
+                
+                let cls = "grid-btn relative flex-1 h-11 sm:h-14 md:h-16 rounded-xl flex items-center justify-center border-2 md:border-4 overflow-hidden mx-0.5 md:mx-1 ";
+                if (manualStepCursor === i) cls += "step-column-highlight ";
+                
+                if (inst === 'hihatC') {
+                    cls += state ? "neon-box-yellow bg-yellow-900/40 border-yellow-400" : (isMainBeat ? "border-slate-600 bg-slate-700/40" : "border-slate-800 bg-slate-800/50 opacity-40");
+                } else if (inst === 'rim') {
+                    cls += state ? "neon-box-amber bg-amber-900/50 border-amber-400" : (isMainBeat ? "border-slate-600 bg-slate-700/40" : "border-slate-800 bg-slate-800/50 opacity-40");
+                } else if (inst === 'snare') {
+                    cls += state ? "neon-box-blue bg-indigo-900/50 border-indigo-400" : (isMainBeat ? "border-slate-600 bg-slate-700/40" : "border-slate-800 bg-slate-800/50 opacity-40");
+                } else if (inst === 'kick') {
+                    cls += state ? "neon-box-red bg-red-900/40 border-red-500" : (isMainBeat ? "border-slate-600 bg-slate-700/40" : "border-slate-800 bg-slate-800/50 opacity-40");
+                }
+                
+                // Etiquetas Didáticas em cada nota ativa
+                let badgeHTML = '';
+                if (state) {
+                    if (inst === 'hihatC') {
+                        badgeHTML = `<span class="badge-r absolute top-0.5 right-0.5 text-[7px] sm:text-[9px] font-black px-1 rounded leading-tight z-10">${labels.r}</span>`;
+                    } else if (inst === 'rim') {
+                        badgeHTML = `<span class="badge-rim absolute top-0.5 right-0.5 text-[7px] sm:text-[9px] font-black px-1 rounded leading-tight z-10">${labels.rim}</span>`;
+                    } else if (inst === 'snare') {
+                        badgeHTML = `<span class="badge-l absolute top-0.5 right-0.5 text-[7px] sm:text-[9px] font-black px-1 rounded leading-tight z-10">${labels.l}</span>`;
+                    }
+                }
+
+                btn.className = cls; 
+                btn.innerHTML = badgeHTML + (state ? activeSvg : svgEmpty);
+                btn.onclick = () => { 
+                    initAudio();
+                    grid[inst][i] ^= 1; 
+                    // Se ativar Aro na mesma coluna da Caixa Normal, desativa a outra para não sobrepor a mesma mão esquerda
+                    if (inst === 'rim' && grid.rim[i]) grid.snare[i] = 0;
+                    if (inst === 'snare' && grid.snare[i]) grid.rim[i] = 0;
+                    render(); 
+                }; 
+                container.appendChild(btn);
+            });
+        }
+
+        function render() {
+            createRow('hihatC', 'row-hihatC', svgHihatC);
+            createRow('rim', 'row-rim', svgRim);
+            createRow('snare', 'row-snare', svgSnare); 
+            createRow('kick', 'row-kick', svgKick);
+        }
+
+        function nextNote() {
+            const secondsPerBeat = 60.0 / bpm; 
+            nextNoteTime += 0.5 * secondsPerBeat; 
+            currentStep = (currentStep + 1) % STEPS;
+        }
+
+        function scheduleNote(step, time) {
+            if (grid.hihatC[step]) playHiHatC(time);
+            if (grid.rim[step]) playRimClick(time);
+            if (grid.snare[step]) playSnare(time);
+            if (grid.kick[step]) playKick(time); 
+            
+            if (isMetronomeOn && step % 2 === 0) {
+                playClick(time, (step === 0));
+            }
+            setTimeout(() => { updateVisuals(step); }, Math.max(0, (time - audioCtx.currentTime) * 1000));
+        }
+
+        function updateVisuals(step) {
+            const isMainBeat = (step % 2 === 0);
+            const beatNumber = Math.floor(step / 2) + 1;
+
+            document.getElementById('beat-counter').innerText = isMainBeat ? beatNumber : "e";
+            
+            if (isMainBeat) {
+                for (let i = 1; i <= 4; i++) {
+                    const light = document.getElementById(`light-${i}`);
+                    if (i === beatNumber) {
+                        light.className = "metronome-active w-6 h-6 rounded-full border-2 flex items-center justify-center text-[10px] font-black transition-all duration-75";
+                        setTimeout(() => {
+                            light.className = "indicator-idle w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center text-[10px] font-bold transition-all duration-300";
+                        }, 160);
+                    }
+                }
+            }
+
+            // Atualiza Monitor de Timbre (Aro vs Pele)
+            const rimTag = document.getElementById('timbre-tag-rim');
+            const snareTag = document.getElementById('timbre-tag-snare');
+            const statusEl = document.getElementById('rim-status-display');
+
+            if (grid.rim[step]) {
+                rimTag.className = "px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs badge-rim scale-110 transition-all";
+                snareTag.className = "px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-slate-700 text-slate-400 transition-all";
+                statusEl.innerHTML = "🥢 TOC! (ARO)";
+            } else if (grid.snare[step]) {
+                rimTag.className = "px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-slate-700 text-slate-400 transition-all";
+                snareTag.className = "px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-indigo-600 text-white scale-110 transition-all";
+                statusEl.innerHTML = "🥁 TÁ! (CAIXA)";
+            } else {
+                rimTag.className = "px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-slate-700 text-slate-400 transition-all";
+                snareTag.className = "px-2 py-0.5 rounded-md font-black text-[10px] md:text-xs bg-slate-700 text-slate-400 transition-all";
+                statusEl.innerHTML = "🎶 GROOVE SUAVE";
+            }
+
+            // Anima quadradinhos da coluna atual
+            ['hihatC', 'rim', 'snare', 'kick'].forEach(inst => {
+                const el = document.getElementById(`row-${inst}`).children[step];
+                if(el) {
+                    const ob = el.style.backgroundColor; 
+                    el.style.backgroundColor = 'rgba(255,255,255,0.28)';
+                    setTimeout(() => el.style.backgroundColor = ob, 90);
+                }
+                if (el && grid[inst][step]) {
+                    const svg = el.querySelector('svg');
+                    if(svg) { svg.classList.add('beat-active'); setTimeout(() => svg.classList.remove('beat-active'), 130); }
+                }
+            });
+
+            updateCoachMessage(step);
+        }
+
+        function updateCoachMessage(step) {
+            const t = translations[currentLang] || translations.pt;
+            const msgEl = document.getElementById('coach-message');
+            if (!msgEl) return;
+
+            if (grid.rim[step]) {
+                msgEl.innerHTML = t.coachRim;
+            } else if (grid.snare[step]) {
+                msgEl.innerHTML = t.coachSnare;
+            } else if (grid.kick[step]) {
+                msgEl.innerHTML = (step % 2 !== 0) ? t.coachKickSync : t.coachKick;
+            } else {
+                msgEl.innerHTML = t.coachHH;
+            }
+        }
+
+        // Função do Botão Passo-a-Passo ("👣 Passo")
+        function stepForward() {
+            initAudio();
+            if (isPlaying) {
+                document.getElementById('playBtn').click();
+            }
+            manualStepCursor = (manualStepCursor + 1) % STEPS;
+            const now = audioCtx.currentTime;
+
+            if (grid.hihatC[manualStepCursor]) playHiHatC(now);
+            if (grid.rim[manualStepCursor]) playRimClick(now);
+            if (grid.snare[manualStepCursor]) playSnare(now);
+            if (grid.kick[manualStepCursor]) playKick(now);
+
+            render();
+            updateVisuals(manualStepCursor);
+        }
+
+        function scheduler() {
+            while (nextNoteTime < audioCtx.currentTime + 0.1) { scheduleNote(currentStep, nextNoteTime); nextNote(); }
+            if (isPlaying) requestAnimationFrame(scheduler);
+        }
+
+        document.getElementById('playBtn').onclick = () => {
+            initAudio(); 
+            isPlaying = !isPlaying;
+            manualStepCursor = -1;
+            render();
+            const btn = document.getElementById('playBtn'); 
+            const txt = document.getElementById('t-play'); 
+            const icon = document.getElementById('playIcon');
+            if (isPlaying) {
+                currentStep = 0; nextNoteTime = audioCtx.currentTime + 0.05; scheduler();
+                btn.classList.replace('from-amber-500', 'from-red-500'); btn.classList.replace('to-orange-600', 'to-red-700');
+                btn.classList.replace('hover:from-amber-400', 'hover:from-red-400'); btn.classList.replace('hover:to-orange-500', 'hover:to-red-600');
+                btn.classList.replace('text-slate-950', 'text-white');
+                icon.innerText = '⏹'; txt.innerText = translations[currentLang].stop;
+            } else {
+                btn.classList.replace('from-red-500', 'from-amber-500'); btn.classList.replace('to-red-700', 'to-orange-600');
+                btn.classList.replace('hover:from-red-400', 'hover:from-amber-400'); btn.classList.replace('hover:to-red-600', 'hover:to-orange-500');
+                btn.classList.replace('text-white', 'text-slate-950');
+                icon.innerText = '▶'; txt.innerText = translations[currentLang].play; document.getElementById('beat-counter').innerText = "1";
+            }
+        };
+
+        function toggleMetronome() {
+            initAudio(); isMetronomeOn = !isMetronomeOn;
+            const btn = document.getElementById('metronomeBtn');
+            if(isMetronomeOn) { btn.classList.add('border-amber-400', 'bg-amber-900/40'); btn.classList.remove('bg-slate-700'); } 
+            else { btn.classList.remove('border-amber-400', 'bg-amber-900/40'); btn.classList.add('bg-slate-700'); }
+        }
+
+        function setBPM(newBpm) { bpm = newBpm; document.getElementById('bpm').value = bpm; document.getElementById('bpmDisplay').innerText = bpm; }
+        document.getElementById('bpm').oninput = (e) => { setBPM(e.target.value); };
+        
+        function clearGrid() { 
+            manualStepCursor = -1;
+            grid.hihatC.fill(0); grid.rim.fill(0); grid.snare.fill(0); grid.kick.fill(0); 
+            render(); 
+        }
+
+        function loadCustomInfographic(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('custom-info-img').src = e.target.result;
+                document.getElementById('custom-info-container').classList.remove('hidden');
+                document.getElementById('svg-info-container').classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetInfographic() {
+            document.getElementById('custom-info-container').classList.add('hidden');
+            document.getElementById('svg-info-container').classList.remove('hidden');
+        }
+
+        function updateStageButtons() {
+            const b1 = document.getElementById('btn-stage1');
+            const b2 = document.getElementById('btn-stage2');
+            if (currentStage === 1) {
+                b1.className = "bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md";
+                b2.className = "bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1";
+            } else {
+                b2.className = "bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md";
+                b1.className = "bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1";
+            }
+        }
+
+        // Etapa 1: O Relógio de Madeira (Bumbo no 1 e 3, Aro nos tempos 2 e 4)
+        function loadStage1() {
+            currentStage = 1;
+            manualStepCursor = -1;
+            grid.hihatC = [1,1,1,1, 1,1,1,1];
+            grid.rim    = [0,0,1,0, 0,0,1,0];
+            grid.snare  = [0,0,0,0, 0,0,0,0];
+            grid.kick   = [1,0,0,0, 1,0,0,0];
+            updateStageButtons();
+            setBPM(72);
+            render();
+        }
+
+        // Etapa 2 (Oficial Lição 23): Levada Pop / Balada (Bumbo no 1, 'e' do 2 e 3 + Aro no 2 e 4)
+        function loadLesson23() {
+            currentStage = 2;
+            manualStepCursor = -1;
+            grid.hihatC = [1,1,1,1, 1,1,1,1]; 
+            grid.rim    = [0,0,1,0, 0,0,1,0]; 
+            grid.snare  = [0,0,0,0, 0,0,0,0]; 
+            grid.kick   = [1,0,0,1, 1,0,0,0]; 
+            updateStageButtons();
+            setBPM(89);
+            render();
+        }
+
+        // ========================================================
+        // TRADUÇÕES (i18n) - PT (Padrão), EN, ES, IT, DE
+        // ========================================================
+        const translations = {
+            pt: {
+                backBtn: "SUMÁRIO",
+                printBtn: "IMPRIMIR (A4)",
+                backBtnBottom: "VOLTAR AO MENU PRINCIPAL",
+                title: "Lição 23: Aro de Caixa", subtitle: "O som estalado de madeira no aro de metal ('TOC!')",
+                tempo: "Tempo", play: "TOCAR", stop: "PARAR", stepBtn: "Passo", speed: "Velocidade (BPM)", click: "Click",
+                slow: "Só Hoje", med: "Bruno Mars", fast: "The Police", iphone: "📱 Som iOS: Desative o Silencioso",
+                stage1Btn: "Etapa 1: Relógio de Madeira (Bumbo 1 e 3 + Aro 2 e 4)", stage2Btn: "Etapa 2: Levada Pop / Balada (Bumbo no 1, 2e, 3)",
+                restore: "RESTAURAR", clear: "LIMPAR",
+                coachTitle: "Treinador Interativo de Aro de Caixa:",
+                coachDefault: "Clica em '👣 Passo' para ouvires o 'TOC!' de madeira no aro de metal nos tempos 2 e 4!",
+                coachRim: "🥢 <strong>ARO DE CAIXA (TOC!):</strong> Palma da mão esquerda pousada na pele e os dedos batem a baqueta no aro de metal!",
+                coachSnare: "🥁 <strong>CAIXA NORMAL (TÁ!):</strong> Levanta a mão toda e bate no centro da pele para o refrão explodir!",
+                coachKick: "🦶 <strong>BUMBO + CHIMBAL:</strong> Pé Direito pisa firme no Bumbo junto com a Mão Direita!",
+                coachKickSync: "🦘 <strong>BUMBO NO 'e' DO 2:</strong> Logo depois do 'TOC!' do aro, o Pé Direito responde no Bumbo!",
+                coachHH: "👉 <strong>CHIMBAL SUAVE:</strong> A Mão Direita mantém o pulso constante!",
+                legendRim: "TOC! = Aro de Metal", legendSnare: "TÁ! = Pele da Caixa",
+                instRim: "ARO (TOC!)", instSnare: "CAIXA (TÁ!)", instKick: "BUMBO", instHihatC: "CHIMBAL",
+                howRead: "COMO LER ESTA PARTITURA",
+                rule1: "<strong class='text-amber-400'>O que é o Aro de Caixa (Rim Click)?</strong> Em vez de bateres no meio da pele para fazer um barulhão ('TÁ!'), apoias a palma da mão esquerda na pele e bates com o corpo da baqueta na <strong>borda de metal</strong> da Caixa! Faz um som lindo de madeira: <strong>'TOC!'</strong>.",
+                rule2: "<strong class='text-yellow-300'>Aro nos Tempos 2 e 4:</strong> A tua Mão Esquerda toca o Aro (<strong>TOC!</strong>) nos números <strong>2</strong> e <strong>4</strong>. Se quiseres testar a diferença, clica na linha da Caixa Normal abaixo para comparar o som!",
+                rule3: "<strong class='text-red-400'>O Balanço do Bumbo:</strong> Na Etapa 2, o Bumbo toca no <strong>1</strong>, no <strong>'e' do 2</strong> e no <strong>3</strong>, criando a batida perfeita de baladas Pop e Reggae!",
+                vocalTitle: "CANTE O RITMO:", vocalSub: "Troca o grito 'TÁ!' pelo estalinho 'TOC!' nos tempos 2 e 4!",
+                vocalText: "<span class='text-red-400'>BUM</span> - tss, <span class='text-amber-400'>TOC!</span> - <span class='text-red-400'>BUM</span>,<br><span class='text-red-400'>BUM</span> - tss, <span class='text-amber-400'>TOC!</span> - tss",
+                infoTitle: "Infográfico Técnico: A Ponte da Mão Esquerda no Aro",
+                uploadInfoBtn: "Usar Imagem Salva do Dispositivo",
+                resetInfoBtn: "Voltar ao Infográfico Interativo Multilíngue",
+                svgP1Title: "1. A 'PONTE' DA MÃO ESQUERDA (VISTA DE LADO)",
+                svgP1Pivot: "1. Ponta colada na pele",
+                svgP1Palm: "2. Palma pousada na pele",
+                svgP1Hit: "\"TOC!\" 💥",
+                svgP1RimLabel: "3. Só os dedos levantam e descem a baqueta contra o ARO DE METAL!",
+                svgP1BoxTitle: "Porque é que a mão fica encostada na pele?",
+                svgP1BoxL1: "Se tirares a mão da pele, a caixa fica a vibrar ('boooing').",
+                svgP1BoxL2: "Com o pulso apoiado na pele, abafas o tambor e tiras",
+                svgP1BoxL3: "aquele estalo seco de madeira igual a um relógio ('TOC!')!",
+                svgP2Title: "2. O TRUQUE SECRETO: VIRA A BAQUETA AO CONTRÁRIO!",
+                svgP2Tip: "Ponta Fina (Na Pele)", svgP2Butt: "Cabo Grosso (No Aro!)",
+                svgP2Sub1: "Bater no aro com a parte grossa (o cabo da baqueta)",
+                svgP2Sub2: "faz o som 'TOC!' sair 2 vezes mais bonito e encorpado!",
+                svgP3Title: "3. QUANDO USAR O ARO NUMA MÚSICA REAL?",
+                svgP3VTitle: "1º NA ESTROFE (Calma)", svgP3VSub: "Quando o cantor começa suave",
+                svgP3CTitle: "2º NO REFRÃO (Explosão)", svgP3CSub: "Soltas o aro e bates na pele!",
+                svgP3BottomText: "Experimenta trocar do Aro para a Caixa no meio da música!",
+                tipTitle: "Dicas do Professor",
+                tip1: "1. A Ponte dos Dedos", tip1Desc: "Não levantes a mão toda da Caixa para bater no aro! A palma da tua mão esquerda e a ponta da baqueta ficam sempre coladas na pele. Só os dedos levantam a outra ponta da baqueta como uma ponte levadiça!",
+                tip2: "2. O Ponto Doce (Sweet Spot)", tip2Desc: "Experimenta deslizar a baqueta um pouquinho mais para a frente ou para trás sobre o aro de metal até encontrares o ponto onde o <strong>'TOC!'</strong> soa mais alto e bonito. Cada caixa tem o seu ponto mágico!",
+                tip3: "3. Imprime em Fundo Branco", tip3Desc: "Clica em <strong>'🖨️ IMPRIMIR (A4)'</strong> no topo! A folha é impressa com fundo 100% branco e linhas pretas para economizares tinta e colecionares todas as aulas numa pasta.",
+                aboutTitle: "Conversa de Baterista: Que Músicas Tocar?",
+                aboutDesc1: "O Som das Músicas Acústicas e Baladas!", aboutDesc1Text: "Quando uma música começa só com violão ou piano e a voz do cantor bem suave, bater na pele da Caixa seria barulhento demais! Por isso os bateristas usam o <strong>Aro de Caixa (Rim Click)</strong> para marcar os tempos 2 e 4 com delicadeza e muito estilo.",
+                aboutDesc2: "3 Músicas Famosas com este Ritmo e BPM!", aboutDesc2Text: "• <strong>A 72 BPM (Botão Só Hoje):</strong> Tocas exatamente a levada da estrofe do clássico nacional <em>'Só Hoje'</em> (Jota Quest) ou de <em>'Knockin' on Heaven's Door'</em> (Guns N' Roses / Bob Dylan)!<br>• <strong>A 89 BPM (Botão Bruno Mars):</strong> Tocas no tempo exato da famosa música <em>'Count on Me'</em> (Bruno Mars) e de <em>'Someone Like You'</em> / <em>'Hello'</em> (Adele)!<br>• <strong>A 117 BPM (Botão The Police):</strong> Tocas o lendário ritmo no aro de <em>'Every Breath You Take'</em> da banda The Police!",
+                challengeTitle: "O Desafio 'Estrofe & Refrão'",
+                challengeText: "<strong>Missão 1:</strong> Começa na <strong>Etapa 1</strong> a <strong>72 BPM (Só Hoje)</strong> e treina tirar um som limpo de madeira ('TOC!') no aro da tua caixa nos tempos 2 e 4.<br><br><strong>Missão 2:</strong> Muda para a <strong>Etapa 2</strong>, clica no botão <strong>89 BPM (Bruno Mars)</strong> e toca 4 compassos no <strong>Aro (Estrofe)</strong> e depois 4 compassos batendo na <strong>Pele da Caixa (Refrão)</strong>!",
+                footer: "© 2026 Olavo Galerani de Almeida. Todos os direitos reservados."
+            },
+            en: {
+                backBtn: "MENU",
+                printBtn: "PRINT (A4)",
+                backBtnBottom: "BACK TO MAIN MENU",
+                title: "Lesson 23: Rim Click", subtitle: "The woody 'CLICK!' sound on the metal rim of the Snare!",
+                tempo: "Tempo", play: "PLAY", stop: "STOP", stepBtn: "Step", speed: "Speed (BPM)", click: "Click",
+                slow: "Ballad", med: "Bruno Mars", fast: "The Police", iphone: "📱 iOS Sound: Silent Mode Off",
+                stage1Btn: "Stage 1: Wooden Clock (Kick 1 & 3 + Rim 2 & 4)", stage2Btn: "Stage 2: Pop Ballad Groove (Kick on 1, 2e, 3)",
+                restore: "RESTORE", clear: "CLEAR",
+                coachTitle: "Interactive Rim Click Coach:",
+                coachDefault: "Click '👣 Step' to hear the woody 'CLICK!' on the metal rim on beats 2 and 4!",
+                coachRim: "🥢 <strong>RIM CLICK (TOC!):</strong> Rest your left palm on the skin and click the stick against the metal rim!",
+                coachSnare: "🥁 <strong>FULL SNARE (KA!):</strong> Lift your whole hand and strike the center of the head for the chorus!",
+                coachKick: "🦶 <strong>KICK + HI-HAT:</strong> Right Foot steps firmly on the Kick together with the Right Hand!",
+                coachKickSync: "🦘 <strong>KICK ON 'e' OF 2:</strong> Right after the Rim Click on 2, your Right Foot answers on the Kick!",
+                coachHH: "👉 <strong>SMOOTH HI-HAT:</strong> Right Hand keeps the steady pulse ticking!",
+                legendRim: "CLICK! = Metal Rim", legendSnare: "KA! = Snare Head",
+                instRim: "RIM (CLICK!)", instSnare: "SNARE (KA!)", instKick: "KICK", instHihatC: "HI-HAT",
+                howRead: "HOW TO READ THIS SCORE",
+                rule1: "<strong class='text-amber-400'>What is a Rim Click (Cross-Stick)?</strong> Instead of hitting the center of the skin for a loud 'KA!', rest your left palm on the drumhead and click the shaft of the stick against the <strong>metal rim</strong>! It makes a crisp wooden sound: <strong>'CLICK!'</strong>.",
+                rule2: "<strong class='text-yellow-300'>Rim on Beats 2 and 4:</strong> Your Left Hand plays the Rim Click on numbers <strong>2</strong> and <strong>4</strong>. Click the normal Snare row below if you want to compare the two sounds!",
+                rule3: "<strong class='text-red-400'>The Ballad Kick Bounce:</strong> In Stage 2, the Kick plays on <strong>1</strong>, the <strong>'e' of 2</strong>, and <strong>3</strong>, creating the classic groove of Pop ballads and Reggae!",
+                vocalTitle: "SING THE RHYTHM:", vocalSub: "Replace the loud 'KA!' with a crisp 'TOC!' on beats 2 and 4!",
+                vocalText: "<span class='text-red-400'>BOOM</span> - tss, <span class='text-amber-400'>TOC!</span> - <span class='text-red-400'>BOOM</span>,<br><span class='text-red-400'>BOOM</span> - tss, <span class='text-amber-400'>TOC!</span> - tss",
+                infoTitle: "Technical Infographic: The Left Hand Bridge on the Rim",
+                uploadInfoBtn: "Use Saved Image from Device",
+                resetInfoBtn: "Back to Multilingual Interactive Infographic",
+                svgP1Title: "1. THE LEFT HAND 'BRIDGE' (SIDE VIEW)",
+                svgP1Pivot: "1. Tip glued to skin",
+                svgP1Palm: "2. Palm resting on skin",
+                svgP1Hit: "\"CLICK!\" 💥",
+                svgP1RimLabel: "3. Only your fingers lift and drop the stick onto the METAL RIM!",
+                svgP1BoxTitle: "Why does your hand stay on the drumhead?",
+                svgP1BoxL1: "If you lift your hand off, the snare rings ('boooing').",
+                svgP1BoxL2: "With your wrist resting on the skin, you muffle the drum",
+                svgP1BoxL3: "and get that crisp wooden clock sound ('TOC!')!",
+                svgP2Title: "2. PRO SECRET: FLIP THE DRUMSTICK AROUND!",
+                svgP2Tip: "Thin Tip (On Skin)", svgP2Butt: "Thick Butt-End (On Rim!)",
+                svgP2Sub1: "Hitting the rim with the thick butt-end of the stick",
+                svgP2Sub2: "makes the 'CLICK!' sound twice as fat and warm!",
+                svgP3Title: "3. WHEN TO USE RIM CLICK IN A REAL SONG?",
+                svgP3VTitle: "1st IN THE VERSE (Calm)", svgP3VSub: "When the singer starts softly",
+                svgP3CTitle: "2nd IN THE CHORUS (Big!)", svgP3CSub: "Leave the rim & hit the skin!",
+                svgP3BottomText: "Try switching from the Rim to the Snare head mid-song!",
+                tipTitle: "Teacher's Tips",
+                tip1: "1. The Finger Drawbridge", tip1Desc: "Don't lift your whole hand off the Snare to play a Rim Click! Your left palm and the tip of the stick stay glued to the head. Only your fingers lift the other end of the stick like a drawbridge!",
+                tip2: "2. Find the Sweet Spot", tip2Desc: "Try sliding the stick slightly forward or backward over the metal rim until you find the spot where the <strong>'TOC!'</strong> sounds loudest and warmest. Every snare has its magic spot!",
+                tip3: "3. Print on White A4 Paper", tip3Desc: "Click <strong>'🖨️ PRINT (A4)'</strong> at the top! The sheet prints with a 100% white background and black lines to save printer ink.",
+                aboutTitle: "Drummer's Chat: Famous Songs to Play!",
+                aboutDesc1: "The Sound of Acoustic Songs & Ballads!", aboutDesc1Text: "When a song starts with just acoustic guitar or piano and a soft vocal, hitting the Snare head would be way too loud! That's why drummers use the <strong>Rim Click</strong> to mark beats 2 and 4 gently and stylishly.",
+                aboutDesc2: "3 Famous Songs with this Beat & BPM!", aboutDesc2Text: "• <strong>At 72 BPM (Ballad Button):</strong> You're playing the exact verse groove of <em>'Só Hoje'</em> (Jota Quest) or <em>'Knockin' on Heaven's Door'</em> (Bob Dylan / Guns N' Roses)!<br>• <strong>At 89 BPM (Bruno Mars Button):</strong> You're at the exact tempo of <em>'Count on Me'</em> (Bruno Mars) and Adele ballads like <em>'Someone Like You'</em>!<br>• <strong>At 117 BPM (The Police Button):</strong> You're playing Stewart Copeland's legendary rim-click groove from <em>'Every Breath You Take'</em> (The Police)!",
+                challengeTitle: "The 'Verse & Chorus' Challenge",
+                challengeText: "<strong>Mission 1:</strong> Start on <strong>Stage 1</strong> at <strong>72 BPM</strong> and practice getting a clean wooden 'TOC!' on your snare rim on beats 2 and 4.<br><br><strong>Mission 2:</strong> Switch to <strong>Stage 2</strong>, click <strong>89 BPM (Bruno Mars)</strong>, and play 4 measures on the <strong>Rim (Verse)</strong> followed by 4 measures hitting the <strong>Snare Head (Chorus)</strong>!",
+                footer: "© 2026 Olavo Galerani de Almeida. All rights reserved."
+            },
+            es: {
+                backBtn: "MENÚ",
+                printBtn: "IMPRIMIR (A4)",
+                backBtnBottom: "VOLVER AL MENÚ PRINCIPAL",
+                title: "Lección 23: Aro de Caja", subtitle: "¡El sonido de madera en el aro de metal ('¡TOC!')",
+                tempo: "Tiempo", play: "TOCAR", stop: "PARAR", stepBtn: "Paso", speed: "Velocidad (BPM)", click: "Click",
+                slow: "Balada", med: "Bruno Mars", fast: "The Police", iphone: "📱 Sonido iOS: Modo Silencio Off",
+                stage1Btn: "Etapa 1: Reloj de Madera (Bombo 1 y 3 + Aro 2 y 4)", stage2Btn: "Etapa 2: Ritmo Pop / Balada (Bombo en 1, 2e, 3)",
+                restore: "RESTAURAR", clear: "BORRAR",
+                coachTitle: "Entrenador Interactivo de Aro de Caja:",
+                coachDefault: "¡Haz clic en '👣 Paso' para escuchar el '¡TOC!' de madera en el aro de metal en los tiempos 2 y 4!",
+                coachRim: "🥢 <strong>ARO DE CAJA (¡TOC!):</strong> ¡Palma izquierda apoyada en el parche y los dedos golpean la baqueta contra el aro!",
+                coachSnare: "🥁 <strong>CAJA NORMAL (¡TA!):</strong> ¡Levanta toda la mano y golpea en el centro del parche para el estribillo!",
+                coachKick: "🦶 <strong>BOMBO + HI-HAT:</strong> ¡El Pie Derecho pisa firme el Bombo junto con la Mano Derecha!",
+                coachKickSync: "🦘 <strong>BOMBO EN 'e' DEL 2:</strong> ¡Justo después del '¡TOC!' del aro, el Pie Derecho responde en el Bombo!",
+                coachHH: "👉 <strong>HI-HAT SUAVE:</strong> ¡La Mano Derecha mantiene el pulso constante!",
+                legendRim: "¡TOC! = Aro de Metal", legendSnare: "¡TA! = Parche de Caja",
+                instRim: "ARO (¡TOC!)", instSnare: "CAJA (¡TA!)", instKick: "BOMBO", instHihatC: "HI-HAT",
+                howRead: "CÓMO LEER ESTA PARTITURA",
+                rule1: "<strong class='text-amber-400'>¿Qué es el Aro de Caja (Rim Click)?</strong> En lugar de golpear el centro del parche ('¡TA!'), apoyas la palma izquierda en el parche y golpeas con el cuerpo de la baqueta el <strong>aro de metal</strong>. ¡Hace un sonido precioso de madera: <strong>'¡TOC!'</strong>!",
+                rule2: "<strong class='text-yellow-300'>Aro en los Tiempos 2 y 4:</strong> Tu Mano Izquierda toca el Aro (<strong>¡TOC!</strong>) en los números <strong>2</strong> y <strong>4</strong>. ¡Haz clic en la fila de Caja Normal abajo si quieres comparar los dos sonidos!",
+                rule3: "<strong class='text-red-400'>El Balanceo del Bombo:</strong> En la Etapa 2, el Bombo toca en el <strong>1</strong>, en la <strong>'e' del 2</strong> y en el <strong>3</strong>, ¡creando el ritmo perfecto de baladas Pop y Reggae!",
+                vocalTitle: "CANTA EL RITMO:", vocalSub: "¡Cambia el grito '¡TA!' por el chasquido '¡TOC!' en el 2 y 4!",
+                vocalText: "<span class='text-red-400'>PUM</span> - tss, <span class='text-amber-400'>¡TOC!</span> - <span class='text-red-400'>PUM</span>,<br><span class='text-red-400'>PUM</span> - tss, <span class='text-amber-400'>¡TOC!</span> - tss",
+                infoTitle: "Infografía Técnica: El Puente de la Mano Izquierda",
+                uploadInfoBtn: "Usar Imagen Guardada",
+                resetInfoBtn: "Volver a la Infografía Interactiva",
+                svgP1Title: "1. EL 'PUENTE' DE LA MANO IZQUIERDA (VISTA LATERAL)",
+                svgP1Pivot: "1. Punta pegada al parche",
+                svgP1Palm: "2. Palma apoyada",
+                svgP1Hit: "\"¡TOC!\" 💥",
+                svgP1RimLabel: "3. ¡Solo los dedos levantan y bajan la baqueta contra el ARO DE METAL!",
+                svgP1BoxTitle: "¿Por qué la mano se queda apoyada en el parche?",
+                svgP1BoxL1: "Si levantas la mano, la caja se queda vibrando ('boooing').",
+                svgP1BoxL2: "Con la muñeca apoyada en el parche, apagas el tambor",
+                svgP1BoxL3: "¡y sacas ese golpe seco de madera como un reloj ('¡TOC!')!",
+                svgP2Title: "2. TRUCO SECRETO: ¡GIRA LA BAQUETA AL REVÉS!",
+                svgP2Tip: "Punta Fina (Parche)", svgP2Butt: "Cabo Grueso (¡En el Aro!)",
+                svgP2Sub1: "Golpear el aro con la parte gruesa (el cabo de la baqueta)",
+                svgP2Sub2: "¡hace que el sonido '¡TOC!' salga el doble de bonito y cálido!",
+                svgP3Title: "3. ¿CUÁNDO USAR EL ARO EN UNA CANCIÓN REAL?",
+                svgP3VTitle: "1º EN LA ESTROFA (Calma)", svgP3VSub: "Cuando el cantante empieza suave",
+                svgP3CTitle: "2º EN EL ESTRIBILLO (¡Fuerte!)", svgP3CSub: "¡Sueltas el aro y golpeas el parche!",
+                svgP3BottomText: "¡Prueba cambiar del Aro al Parche en medio de la canción!",
+                tipTitle: "Consejos del Profesor",
+                tip1: "1. El Puente de los Dedos", tip1Desc: "¡No levantes toda la mano de la Caja! La palma izquierda y la punta de la baqueta se quedan pegadas al parche. ¡Solo los dedos levantan el otro extremo como un puente levadizo!",
+                tip2: "2. El Punto Dulce (Sweet Spot)", tip2Desc: "Prueba deslizar la baqueta un poquito hacia adelante o hacia atrás sobre el aro hasta encontrar el punto donde el <strong>'¡TOC!'</strong> suene más bonito.",
+                tip3: "3. Imprime en Fondo Blanco A4", tip3Desc: "¡Haz clic en <strong>'🖨️ IMPRIMIR (A4)'</strong> arriba! La hoja sale con fondo 100% blanco y líneas negras para ahorrar tinta.",
+                aboutTitle: "Charla de Baterista: ¿Qué Canciones Tocar?",
+                aboutDesc1: "¡El Sonido de las Canciones Acústicas y Baladas!", aboutDesc1Text: "Cuando una canción empieza suave con guitarra acústica o piano, golpear el parche sería muy ruidoso. Por eso los bateristas usan el <strong>Aro de Caja</strong> en el 2 y 4.",
+                aboutDesc2: "¡3 Canciones Famosas con este Ritmo y BPM!", aboutDesc2Text: "• <strong>A 72 BPM (Botón Balada):</strong> ¡Tocas el ritmo de estrofa de <em>'Só Hoje'</em> (Jota Quest) o <em>'Knockin' on Heaven's Door'</em> (Guns N' Roses / Bob Dylan)!<br>• <strong>A 89 BPM (Botón Bruno Mars):</strong> ¡Estás en el tempo exacto de <em>'Count on Me'</em> (Bruno Mars) y baladas de Adele!<br>• <strong>A 117 BPM (Botón The Police):</strong> ¡Tocas el legendario ritmo en el aro de <em>'Every Breath You Take'</em> de The Police!",
+                challengeTitle: "El Desafío 'Estrofa y Estribillo'",
+                challengeText: "<strong>Misión 1:</strong> Empieza en la <strong>Etapa 1</strong> a <strong>72 BPM</strong> y entrena sacar un sonido limpio en el aro en el 2 y 4.<br><br><strong>Misión 2:</strong> Cambia a la <strong>Etapa 2</strong>, pon <strong>89 BPM (Bruno Mars)</strong> y toca 4 compases en el <strong>Aro (Estrofa)</strong> y luego 4 compases en el <strong>Parche (Estribillo)</strong>!",
+                footer: "© 2026 Olavo Galerani de Almeida. Todos los derechos reservados."
+            },
+            it: {
+                backBtn: "MENU",
+                printBtn: "STAMPA (A4)",
+                backBtnBottom: "TORNA AL MENU PRINCIPALE",
+                title: "Lezione 23: Bordo Rullante", subtitle: "Il suono secco del legno sul bordo di metallo ('TOC!')",
+                tempo: "Tempo", play: "SUONA", stop: "FERMA", stepBtn: "Passo", speed: "Velocità (BPM)", click: "Click",
+                slow: "Ballata", med: "Bruno Mars", fast: "The Police", iphone: "📱 Audio iOS: Disattiva Silenzioso",
+                stage1Btn: "Fase 1: Orologio di Legno (Cassa 1 e 3 + Bordo 2 e 4)", stage2Btn: "Fase 2: Groove Pop / Ballata (Cassa su 1, 2e, 3)",
+                restore: "RIPRISTINA", clear: "CANCELLA",
+                coachTitle: "Allenatore Interattivo Rim Click:",
+                coachDefault: "Clicca su '👣 Passo' per sentire il 'TOC!' sul bordo di metallo sui tempi 2 e 4!",
+                coachRim: "🥢 <strong>BORDO RULLANTE (TOC!):</strong> Palmo sinistro poggiato sulla pelle e le dita battono la bacchetta sul bordo!",
+                coachSnare: "🥁 <strong>RULLANTE PIENO (TA!):</strong> Alza tutta la mano e colpisci il centro della pelle per il ritornello!",
+                coachKick: "🦶 <strong>CASSA + CHARLESTON:</strong> Il Piede Destro spinge deciso sulla Cassa insieme alla Mano Destra!",
+                coachKickSync: "🦘 <strong>CASSA SULLA 'e' DEL 2:</strong> Subito dopo il 'TOC!' del bordo, il Piede Destro risponde sulla Cassa!",
+                coachHH: "👉 <strong>CHARLESTON DOLCE:</strong> La Mano Destra mantiene il tempo costante!",
+                legendRim: "TOC! = Bordo Metallo", legendSnare: "TA! = Pelle Rullante",
+                instRim: "BORDO (TOC!)", instSnare: "RULLANTE (TA!)", instKick: "CASSA", instHihatC: "CHARLESTON",
+                howRead: "COME LEGGERE QUESTA PARTITURA",
+                rule1: "<strong class='text-amber-400'>Cos'è il Rim Click (Cross-Stick)?</strong> Invece di colpire il centro della pelle ('TA!'), appoggi il palmo sinistro sulla pelle e colpisci con il corpo della bacchetta il <strong>bordo di metallo</strong>! Produce un bel suono di legno: <strong>'TOC!'</strong>.",
+                rule2: "<strong class='text-yellow-300'>Bordo sui Tempi 2 e 4:</strong> La Mano Sinistra suona il Bordo (<strong>TOC!</strong>) sui numeri <strong>2</strong> e <strong>4</strong>. Clicca sulla riga del Rullante sotto per confrontare i due suoni!",
+                rule3: "<strong class='text-red-400'>Il Groove della Cassa:</strong> Nella Fase 2, la Cassa suona sull'<strong>1</strong>, sulla <strong>'e' del 2</strong> e sul <strong>3</strong>, creando il ritmo perfetto per ballate Pop e Reggae!",
+                vocalTitle: "CANTA IL RITMO:", vocalSub: "Sostituisci l'urlo 'TA!' con il tocco 'TOC!' sui tempi 2 e 4!",
+                vocalText: "<span class='text-red-400'>TUM</span> - tss, <span class='text-amber-400'>TOC!</span> - <span class='text-red-400'>TUM</span>,<br><span class='text-red-400'>TUM</span> - tss, <span class='text-amber-400'>TOC!</span> - tss",
+                infoTitle: "Infografica Tecnica: Il Ponte della Mano Sinistra",
+                uploadInfoBtn: "Usa Immagine Salvata",
+                resetInfoBtn: "Torna all'Infografica Interattiva",
+                svgP1Title: "1. IL 'PONTE' DELLA MANO SINISTRA (VISTA LATERALE)",
+                svgP1Pivot: "1. Punta fissa sulla pelle",
+                svgP1Palm: "2. Palmo poggiato",
+                svgP1Hit: "\"TOC!\" 💥",
+                svgP1RimLabel: "3. Solo le dita alzano e abbassano la bacchetta sul BORDO DI METALLO!",
+                svgP1BoxTitle: "Perché la mano resta appoggiata sulla pelle?",
+                svgP1BoxL1: "Se alzi la mano, il rullante resta a vibrare ('boooing').",
+                svgP1BoxL2: "Col polso poggiato sulla pelle, stoppi il tamburo",
+                svgP1BoxL3: "e ottieni quel colpo secco di legno come un orologio ('TOC!')!",
+                svgP2Title: "2. TRUCCO SEGRETO: GIRA LA BACCHETTA AL CONTRARIO!",
+                svgP2Tip: "Punta Sottile (Pelle)", svgP2Butt: "Fondo Spesso (Sul Bordo!)",
+                svgP2Sub1: "Colpire il bordo con la parte spessa della bacchetta",
+                svgP2Sub2: "rende il suono 'TOC!' due volte più caldo e corposo!",
+                svgP3Title: "3. QUANDO USARE IL BORDO IN UNA CANZONE VERA?",
+                svgP3VTitle: "1º NELLA STROFA (Calma)", svgP3VSub: "Quando il cantante inizia piano",
+                svgP3CTitle: "2º NEL RITORNELLO (Forte!)", svgP3CSub: "Lasci il bordo e colpisci la pelle!",
+                svgP3BottomText: "Prova a passare dal Bordo alla Pelle a metà canzone!",
+                tipTitle: "I Consigli del Maestro",
+                tip1: "1. Il Ponte delle Dita", tip1Desc: "Non alzare tutta la mano dal Rullante! Il palmo sinistro e la punta della bacchetta restano incollati alla pelle. Solo le dita sollevano l'altra estremità come un ponte levatoio!",
+                tip2: "2. Il Punto Dolce (Sweet Spot)", tip2Desc: "Prova a far scorrere la bacchetta un po' più avanti o indietro sul bordo finché non trovi il punto in cui il <strong>'TOC!'</strong> suona più forte e bello.",
+                tip3: "3. Stampa su Sfondo Bianco A4", tip3Desc: "Clicca su <strong>'🖨️ STAMPA (A4)'</strong> in alto! La scheda viene stampata con sfondo 100% bianco e linee nere per risparmiare inchiostro.",
+                aboutTitle: "Chiacchierata da Batterista: Quali Canzoni Suonare?",
+                aboutDesc1: "Il Suono delle Canzoni Acustiche e Ballate!", aboutDesc1Text: "Quando una canzone inizia piano con chitarra acustica o pianoforte, colpire la pelle del Rullante sarebbe troppo rumoroso! Per questo i batteristi usano il <strong>Rim Click</strong> sul 2 e 4.",
+                aboutDesc2: "3 Canzoni Famose con questo Ritmo e BPM!", aboutDesc2Text: "• <strong>A 72 BPM (Pulsante Ballata):</strong> Suoni il ritmo della strofa di <em>'Só Hoje'</em> (Jota Quest) o <em>'Knockin' on Heaven's Door'</em> (Guns N' Roses / Bob Dylan)!<br>• <strong>A 89 BPM (Pulsante Bruno Mars):</strong> Sei al tempo esatto di <em>'Count on Me'</em> (Bruno Mars) e delle ballate di Adele!<br>• <strong>A 117 BPM (Pulsante The Police):</strong> Suoni il leggendario groove sul bordo di <em>'Every Breath You Take'</em> dei Police!",
+                challengeTitle: "La Sfida 'Strofa & Ritornello'",
+                challengeText: "<strong>Missione 1:</strong> Inizia nella <strong>Fase 1</strong> a <strong>72 BPM</strong> e allenati a ottenere un suono pulito sul bordo sui tempi 2 e 4.<br><br><strong>Missione 2:</strong> Passa alla <strong>Fase 2</strong>, imposta <strong>89 BPM (Bruno Mars)</strong> e suona 4 battute sul <strong>Bordo (Strofa)</strong> e poi 4 battute sulla <strong>Pelle (Ritornello)</strong>!",
+                footer: "© 2026 Olavo Galerani de Almeida. Tutti i diritti riservati."
+            },
+            de: {
+                backBtn: "MENÜ",
+                printBtn: "DRUCKEN (A4)",
+                backBtnBottom: "ZURÜCK ZUM HAUPTMENÜ",
+                title: "Lektion 23: Rim Click", subtitle: "Der holzige 'KLICK!'-Sound am Metallrand der Snare!",
+                tempo: "Takt", play: "SPIELEN", stop: "STOPP", stepBtn: "Schritt", speed: "Tempo (BPM)", click: "Klick",
+                slow: "Ballade", med: "Bruno Mars", fast: "The Police", iphone: "📱 iOS Ton: Stummmodus aus",
+                stage1Btn: "Stufe 1: Holzuhr (Bassdrum 1 & 3 + Rand 2 & 4)", stage2Btn: "Stufe 2: Pop-Balladen-Groove (Kick auf 1, 2e, 3)",
+                restore: "WIEDERHERSTELLEN", clear: "LÖSCHEN",
+                coachTitle: "Interaktiver Rim-Click-Trainer:",
+                coachDefault: "Klicke auf '👣 Schritt', um das holzige 'KLICK!' am Metallrand auf 2 und 4 zu hören!",
+                coachRim: "🥢 <strong>RIM CLICK (KLICK!):</strong> Linke Handfläche ruht auf dem Fell und die Finger schlagen den Stick auf den Metallrand!",
+                coachSnare: "🥁 <strong>VOLLE SNARE (PA!):</strong> Hebe die ganze Hand und schlage für den Refrain in die Fellmitte!",
+                coachKick: "🦶 <strong>BASSDRUM + HI-HAT:</strong> Rechter Fuß tritt fest die Bassdrum zusammen mit der Rechten Hand!",
+                coachKickSync: "🦘 <strong>KICK AUF 'e' VON 2:</strong> Direkt nach dem Rim Click auf 2 antwortet der Rechte Fuß auf der Bassdrum!",
+                coachHH: "👉 <strong>SANFTE HI-HAT:</strong> Rechte Hand hält den konstanten Puls!",
+                legendRim: "KLICK! = Metallrand", legendSnare: "PA! = Snare-Fell",
+                instRim: "RAND (KLICK!)", instSnare: "SNARE (PA!)", instKick: "BASSDRUM", instHihatC: "HI-HAT",
+                howRead: "WIE MAN DIESE PARTITUR LIEST",
+                rule1: "<strong class='text-amber-400'>Was ist ein Rim Click (Cross-Stick)?</strong> Statt für ein lautes 'PA!' in die Fellmitte zu schlagen, legst du die linke Handfläche auf das Fell und schlägst den Stockschaft auf den <strong>Metallrand</strong>! Das ergibt einen edlen Holzklang: <strong>'KLICK!'</strong>.",
+                rule2: "<strong class='text-yellow-300'>Rand auf Schlag 2 und 4:</strong> Deine Linke Hand spielt den Rim Click auf den Zahlen <strong>2</strong> und <strong>4</strong>. Klicke unten auf die normale Snare-Zeile, um beide Sounds zu vergleichen!",
+                rule3: "<strong class='text-red-400'>Der Balladen-Kick:</strong> In Stufe 2 spielt die Bassdrum auf <strong>1</strong>, dem <strong>'e' von 2</strong> und <strong>3</strong> – der perfekte Groove für Pop-Balladen und Reggae!",
+                vocalTitle: "SINGE DEN RHYTHMUS:", vocalSub: "Ersetze das laute 'PA!' durch ein knackiges 'KLICK!' auf 2 und 4!",
+                vocalText: "<span class='text-red-400'>BUM</span> - tss, <span class='text-amber-400'>KLICK!</span> - <span class='text-red-400'>BUM</span>,<br><span class='text-red-400'>BUM</span> - tss, <span class='text-amber-400'>KLICK!</span> - tss",
+                infoTitle: "Technische Infografik: Die Linke-Hand-Brücke am Rand",
+                uploadInfoBtn: "Gespeichertes Bild verwenden",
+                resetInfoBtn: "Zurück zur interaktiven Infografik",
+                svgP1Title: "1. DIE LINKE-HAND-'BRÜCKE' (SEITENANSICHT)",
+                svgP1Pivot: "1. Spitze bleibt am Fell",
+                svgP1Palm: "2. Handfläche liegt auf",
+                svgP1Hit: "\"KLICK!\" 💥",
+                svgP1RimLabel: "3. Nur die Finger heben und senken den Stick auf den METALLRAND!",
+                svgP1BoxTitle: "Warum bleibt die Hand auf dem Fell liegen?",
+                svgP1BoxL1: "Wenn du die Hand anhebst, singt das Fell nach ('boooing').",
+                svgP1BoxL2: "Mit dem Handballen auf dem Fell dämpfst du die Trommel",
+                svgP1BoxL3: "und erhältst diesen trockenen Holzuhr-Klang ('KLICK!')!",
+                svgP2Title: "2. PROFI-TRICK: DREH DEN STICK UM!",
+                svgP2Tip: "Dünne Spitze (Am Fell)", svgP2Butt: "Dickes Ende (Am Rand!)",
+                svgP2Sub1: "Mit dem dicken Stockende auf den Metallrand zu schlagen,",
+                svgP2Sub2: "macht den 'KLICK!'-Sound doppelt so fett und warm!",
+                svgP3Title: "3. WANN NUTZT MAN RIM CLICK IM ECHTEN SONG?",
+                svgP3VTitle: "1. IN DER STROPHE (Ruhig)", svgP3VSub: "Wenn der Sänger sanft beginnt",
+                svgP3CTitle: "2. IM REFRAIN (Explosion!)", svgP3CSub: "Weg vom Rand & ab aufs Fell!",
+                svgP3BottomText: "Probiere mitten im Song vom Rand auf das Snare-Fell zu wechseln!",
+                tipTitle: "Tipps vom Lehrer",
+                tip1: "1. Die Finger-Zugbrücke", tip1Desc: "Hebe nicht die ganze Hand von der Snare! Deine linke Handfläche und die Stockspitze bleiben am Fell. Nur die Finger heben das andere Ende wie eine Zugbrücke!",
+                tip2: "2. Finde den Sweet Spot", tip2Desc: "Schiebe den Stick ein wenig vor oder zurück über den Metallrand, bis du den Punkt findest, an dem das <strong>'KLICK!'</strong> am vollsten klingt.",
+                tip3: "3. Auf weißem A4-Papier drucken", tip3Desc: "Klicke oben auf <strong>'🖨️ DRUCKEN (A4)'</strong>! Das Blatt wird mit 100% weißem Hintergrund und schwarzen Linien tintensparend gedruckt.",
+                aboutTitle: "Schlagzeuger-Chat: Berühmte Songs zum Mitspielen!",
+                aboutDesc1: "Der Sound für Akustik-Songs & Balladen!", aboutDesc1Text: "Wenn ein Song ruhig mit Akustikgitarre oder Klavier beginnt, wäre die normale Snare viel zu laut! Deshalb nutzen Drummer den <strong>Rim Click</strong> auf 2 und 4.",
+                aboutDesc2: "3 Berühmte Songs mit diesem Beat & BPM!", aboutDesc2Text: "• <strong>Bei 72 BPM (Balladen-Button):</strong> Du spielst den Strophen-Groove von <em>'Só Hoje'</em> (Jota Quest) oder <em>'Knockin' on Heaven's Door'</em> (Bob Dylan / Guns N' Roses)!<br>• <strong>Bei 89 BPM (Bruno Mars-Button):</strong> Du bist genau im Tempo von <em>'Count on Me'</em> (Bruno Mars) und Adele-Balladen!<br>• <strong>Bei 117 BPM (The Police-Button):</strong> Du spielst Stewart Copelands legendären Rim-Click-Groove aus <em>'Every Breath You Take'</em> (The Police)!",
+                challengeTitle: "Die 'Strophe & Refrain' Herausforderung",
+                challengeText: "<strong>Mission 1:</strong> Starte auf <strong>Stufe 1</strong> bei <strong>72 BPM</strong> und übe einen sauberen 'KLICK!'-Sound am Rand auf 2 und 4.<br><br><strong>Mission 2:</strong> Wechsle zu <strong>Stufe 2</strong>, klicke auf <strong>89 BPM (Bruno Mars)</strong> und spiele 4 Takte am <strong>Rand (Strophe)</strong> und danach 4 Takte auf dem <strong>Snare-Fell (Refrain)</strong>!",
+                footer: "© 2026 Olavo Galerani de Almeida. Alle Rechte vorbehalten."
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            document.querySelectorAll('[id^="lang-"]').forEach(btn => {
+                btn.className = "lang-idle border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center";
+            });
+            const activeBtn = document.getElementById(`lang-${lang}`);
+            if(activeBtn) {
+                activeBtn.className = "lang-active border-2 rounded-xl px-2 py-1 transition-all flex items-center justify-center";
+            }
+
+            const t = translations[lang];
+            if(!t) return;
+            
+            const safeSetText = (id, text) => { const el = document.getElementById(id); if(el) el.innerText = text; };
+            const safeSetHTML = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
+
+            const labels = getHandLabels();
+            safeSetText('timbre-tag-rim', labels.rimTag);
+            safeSetText('timbre-tag-snare', labels.snareTag);
+
+            safeSetHTML('t-backBtn', t.backBtn);
+            safeSetText('t-printBtn', t.printBtn);
+            safeSetText('t-backBtnBottom', t.backBtnBottom); 
+            safeSetText('t-title', t.title);
+            safeSetHTML('t-subtitle', `<span>🥢</span> ` + t.subtitle);
+            safeSetText('t-tempo', t.tempo);
+            safeSetText('t-play', isPlaying ? t.stop : t.play);
+            safeSetText('t-stepBtn', t.stepBtn);
+            safeSetText('t-speed', t.speed);
+            safeSetText('t-slow', t.slow);
+            safeSetText('t-med', t.med);
+            safeSetText('t-fast', t.fast);
+            safeSetText('t-iphone', t.iphone);
+            safeSetText('t-click', t.click);
+            
+            safeSetText('t-stage1Btn', t.stage1Btn);
+            safeSetText('t-stage2Btn', t.stage2Btn);
+            safeSetText('t-restore', t.restore);
+            safeSetText('t-clear', t.clear);
+            
+            safeSetText('t-coachTitle', t.coachTitle);
+            safeSetHTML('coach-message', t.coachDefault);
+            safeSetText('t-legendRim', t.legendRim);
+            safeSetText('t-legendSnare', t.legendSnare);
+
+            safeSetText('t-instHihatC', t.instHihatC);
+            safeSetText('t-instRim', t.instRim);
+            safeSetText('t-instSnare', t.instSnare);
+            safeSetText('t-instKick', t.instKick);
+            
+            safeSetText('t-howRead', t.howRead);
+            safeSetHTML('t-rule1', t.rule1);
+            safeSetHTML('t-rule2', t.rule2);
+            safeSetHTML('t-rule3', t.rule3);
+            
+            safeSetText('t-vocalTitle', t.vocalTitle);
+            safeSetText('t-vocalSub', t.vocalSub);
+            safeSetHTML('t-vocalText', t.vocalText);
+
+            // Traduzir o Infográfico Vetorial Embutido
+            safeSetText('t-infoTitle', t.infoTitle);
+            safeSetText('t-uploadInfoBtn', t.uploadInfoBtn);
+            safeSetText('t-resetInfoBtn', t.resetInfoBtn);
+            safeSetText('svg-p1-title', t.svgP1Title);
+            safeSetText('svg-p1-pivot', t.svgP1Pivot);
+            safeSetText('svg-p1-palm', t.svgP1Palm);
+            safeSetText('svg-p1-hit', t.svgP1Hit);
+            safeSetText('svg-p1-rimLabel', t.svgP1RimLabel);
+            safeSetText('svg-p1-boxTitle', t.svgP1BoxTitle);
+            safeSetText('svg-p1-boxL1', t.svgP1BoxL1);
+            safeSetText('svg-p1-boxL2', t.svgP1BoxL2);
+            safeSetText('svg-p1-boxL3', t.svgP1BoxL3);
+            safeSetText('svg-p2-title', t.svgP2Title);
+            safeSetText('svg-p2-tip', t.svgP2Tip);
+            safeSetText('svg-p2-butt', t.svgP2Butt);
+            safeSetText('svg-p2-sub1', t.svgP2Sub1);
+            safeSetText('svg-p2-sub2', t.svgP2Sub2);
+            safeSetText('svg-p3-title', t.svgP3Title);
+            safeSetText('svg-p3-vTitle', t.svgP3VTitle);
+            safeSetText('svg-p3-vSub', t.svgP3VSub);
+            safeSetText('svg-p3-cTitle', t.svgP3CTitle);
+            safeSetText('svg-p3-cSub', t.svgP3CSub);
+            safeSetText('svg-p3-bottomText', t.svgP3BottomText);
+
+            safeSetText('t-tipTitle', t.tipTitle);
+            safeSetText('t-tip1', t.tip1);
+            safeSetHTML('t-tip1Desc', t.tip1Desc);
+            safeSetText('t-tip2', t.tip2);
+            safeSetHTML('t-tip2Desc', t.tip2Desc);
+            safeSetText('t-tip3', t.tip3);
+            safeSetHTML('t-tip3Desc', t.tip3Desc);
+
+            safeSetText('t-aboutTitle', t.aboutTitle);
+            safeSetText('t-aboutDesc1', t.aboutDesc1);
+            safeSetHTML('t-aboutDesc1Text', t.aboutDesc1Text);
+            safeSetText('t-aboutDesc2', t.aboutDesc2);
+            safeSetHTML('t-aboutDesc2Text', t.aboutDesc2Text);
+            
+            safeSetText('t-challengeTitle', t.challengeTitle);
+            safeSetHTML('t-challengeText', t.challengeText);
+            
+            safeSetText('t-footer', t.footer);
+
+            render();
+        }
+    </script>
+</body>
+</html>
