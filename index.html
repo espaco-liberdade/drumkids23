@@ -294,14 +294,17 @@
     <div class="bg-slate-800 p-3 sm:p-5 md:p-6 rounded-2xl md:rounded-[2.5rem] shadow-2xl border-4 border-slate-700 w-full max-w-5xl relative mb-8 print-break print-box">
         <div class="w-full">
             
-            <!-- Seletor Pedagógico de Nível (Etapa 1 vs Etapa 2) -->
+            <!-- Seletor Pedagógico de Nível (Etapa 1, Etapa 2 e Teste de Refrão) -->
             <div class="flex flex-wrap justify-between items-center gap-2 mb-4 ml-0 md:ml-[115px] pr-1 no-print">
                 <div class="flex flex-wrap gap-1.5">
                     <button onclick="loadStage1()" id="btn-stage1" class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1">
                         <span>1️⃣</span> <span id="t-stage1Btn">Etapa 1: Relógio de Madeira (Bumbo 1 e 3 + Aro 2 e 4)</span>
                     </button>
                     <button onclick="loadLesson23()" id="btn-stage2" class="bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md">
-                        <span>2️⃣</span> <span id="t-stage2Btn">Etapa 2: Levada Pop / Balada (Bumbo no 1, 2e, 3)</span>
+                        <span>2️⃣</span> <span id="t-stage2Btn">Etapa 2: Estrofe Pop no Aro (Bumbo 1, 2e, 3)</span>
+                    </button>
+                    <button onclick="loadChorus()" id="btn-stage3" class="bg-slate-700 hover:bg-indigo-900/60 text-indigo-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1">
+                        <span>🔥</span> <span id="t-stage3Btn">Refrão: Trocar Aro p/ Pele (TÁ!)</span>
                     </button>
                 </div>
 
@@ -657,7 +660,9 @@
 
         function initAudio() {
             if (audioUnlocked) return;
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return;
+            audioCtx = new AudioContextClass();
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const buffer = audioCtx.createBuffer(1, 1, 22050);
             const source = audioCtx.createBufferSource();
@@ -669,6 +674,7 @@
         document.body.addEventListener('click', initAudio, { once: true });
 
         function playHiHatC(time) {
+            if (!audioCtx) return;
             const bufferSize = audioCtx.sampleRate * 0.09; 
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = buffer.getChannelData(0);
@@ -683,6 +689,7 @@
 
         // Sintetizador do Aro de Caixa (Rim Click / Cross-Stick): Som seco e estalado de madeira no metal ("TOC!")
         function playRimClick(time) {
+            if (!audioCtx) return;
             // 1. Ressonância oca de madeira da baqueta (Triangle ~ 520Hz + 1280Hz)
             const osc1 = audioCtx.createOscillator();
             const osc2 = audioCtx.createOscillator();
@@ -723,6 +730,7 @@
         }
 
         function playSnare(time) {
+            if (!audioCtx) return;
             const osc = audioCtx.createOscillator(); const oscGain = audioCtx.createGain();
             osc.type = 'sine'; osc.connect(oscGain); oscGain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(300, time); osc.frequency.exponentialRampToValueAtTime(150, time + 0.1);
@@ -742,6 +750,7 @@
         }
 
         function playKick(time) {
+            if (!audioCtx) return;
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.frequency.setValueAtTime(150, time); osc.frequency.exponentialRampToValueAtTime(0.01, time + 0.5); 
@@ -750,6 +759,7 @@
         }
 
         function playClick(time, isAccent) {
+            if (!audioCtx) return;
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'sine'; osc.frequency.setValueAtTime(isAccent ? 1200 : 800, time);
@@ -942,7 +952,7 @@
                 document.getElementById('playBtn').click();
             }
             manualStepCursor = (manualStepCursor + 1) % STEPS;
-            const now = audioCtx.currentTime;
+            const now = audioCtx ? audioCtx.currentTime : 0;
 
             if (grid.hihatC[manualStepCursor]) playHiHatC(now);
             if (grid.rim[manualStepCursor]) playRimClick(now);
@@ -1016,13 +1026,11 @@
         function updateStageButtons() {
             const b1 = document.getElementById('btn-stage1');
             const b2 = document.getElementById('btn-stage2');
-            if (currentStage === 1) {
-                b1.className = "bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md";
-                b2.className = "bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1";
-            } else {
-                b2.className = "bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md";
-                b1.className = "bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1";
-            }
+            const b3 = document.getElementById('btn-stage3');
+            const idleCls = "bg-slate-700 hover:bg-slate-600 text-slate-200 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl border-2 border-transparent transition flex items-center gap-1";
+            if (b1) b1.className = (currentStage === 1) ? "bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md" : idleCls;
+            if (b2) b2.className = (currentStage === 2) ? "bg-amber-900/60 text-amber-200 border-2 border-amber-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md" : idleCls;
+            if (b3) b3.className = (currentStage === 3) ? "bg-indigo-900/70 text-indigo-200 border-2 border-indigo-400 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow-md" : idleCls;
         }
 
         // Etapa 1: O Relógio de Madeira (Bumbo no 1 e 3, Aro nos tempos 2 e 4)
@@ -1038,7 +1046,7 @@
             render();
         }
 
-        // Etapa 2 (Oficial Lição 23): Levada Pop / Balada (Bumbo no 1, 'e' do 2 e 3 + Aro no 2 e 4)
+        // Etapa 2 (Oficial Lição 23): Levada Pop / Balada no Aro (Bumbo no 1, 'e' do 2 e 3 + Aro no 2 e 4)
         function loadLesson23() {
             currentStage = 2;
             manualStepCursor = -1;
@@ -1048,6 +1056,18 @@
             grid.kick   = [1,0,0,1, 1,0,0,0]; 
             updateStageButtons();
             setBPM(89);
+            render();
+        }
+
+        // Etapa 3 (Bónus Didático): O Refrão na Pele da Caixa (Troca o Aro pela Caixa Normal para sentir a explosão do Refrão!)
+        function loadChorus() {
+            currentStage = 3;
+            manualStepCursor = -1;
+            grid.hihatC = [1,1,1,1, 1,1,1,1];
+            grid.rim    = [0,0,0,0, 0,0,0,0];
+            grid.snare  = [0,0,1,0, 0,0,1,0];
+            grid.kick   = [1,0,0,1, 1,0,0,0];
+            updateStageButtons();
             render();
         }
 
@@ -1062,7 +1082,7 @@
                 title: "Lição 23: Aro de Caixa", subtitle: "O som estalado de madeira no aro de metal ('TOC!')",
                 tempo: "Tempo", play: "TOCAR", stop: "PARAR", stepBtn: "Passo", speed: "Velocidade (BPM)", click: "Click",
                 slow: "Só Hoje", med: "Bruno Mars", fast: "The Police", iphone: "📱 Som iOS: Desative o Silencioso",
-                stage1Btn: "Etapa 1: Relógio de Madeira (Bumbo 1 e 3 + Aro 2 e 4)", stage2Btn: "Etapa 2: Levada Pop / Balada (Bumbo no 1, 2e, 3)",
+                stage1Btn: "Etapa 1: Relógio de Madeira (1 e 3)", stage2Btn: "Etapa 2: Estrofe Pop no Aro (1, 2e, 3)", stage3Btn: "Refrão: Trocar Aro p/ Pele (TÁ!)",
                 restore: "RESTAURAR", clear: "LIMPAR",
                 coachTitle: "Treinador Interativo de Aro de Caixa:",
                 coachDefault: "Clica em '👣 Passo' para ouvires o 'TOC!' de madeira no aro de metal nos tempos 2 e 4!",
@@ -1117,7 +1137,7 @@
                 title: "Lesson 23: Rim Click", subtitle: "The woody 'CLICK!' sound on the metal rim of the Snare!",
                 tempo: "Tempo", play: "PLAY", stop: "STOP", stepBtn: "Step", speed: "Speed (BPM)", click: "Click",
                 slow: "Ballad", med: "Bruno Mars", fast: "The Police", iphone: "📱 iOS Sound: Silent Mode Off",
-                stage1Btn: "Stage 1: Wooden Clock (Kick 1 & 3 + Rim 2 & 4)", stage2Btn: "Stage 2: Pop Ballad Groove (Kick on 1, 2e, 3)",
+                stage1Btn: "Stage 1: Wooden Clock (1 & 3)", stage2Btn: "Stage 2: Pop Verse on Rim (1, 2e, 3)", stage3Btn: "Chorus: Switch Rim to Head (KA!)",
                 restore: "RESTORE", clear: "CLEAR",
                 coachTitle: "Interactive Rim Click Coach:",
                 coachDefault: "Click '👣 Step' to hear the woody 'CLICK!' on the metal rim on beats 2 and 4!",
@@ -1172,7 +1192,7 @@
                 title: "Lección 23: Aro de Caja", subtitle: "¡El sonido de madera en el aro de metal ('¡TOC!')",
                 tempo: "Tiempo", play: "TOCAR", stop: "PARAR", stepBtn: "Paso", speed: "Velocidad (BPM)", click: "Click",
                 slow: "Balada", med: "Bruno Mars", fast: "The Police", iphone: "📱 Sonido iOS: Modo Silencio Off",
-                stage1Btn: "Etapa 1: Reloj de Madera (Bombo 1 y 3 + Aro 2 y 4)", stage2Btn: "Etapa 2: Ritmo Pop / Balada (Bombo en 1, 2e, 3)",
+                stage1Btn: "Etapa 1: Reloj de Madera (1 y 3)", stage2Btn: "Etapa 2: Estrofa Pop en Aro (1, 2e, 3)", stage3Btn: "Estribillo: Cambiar a Parche (¡TA!)",
                 restore: "RESTAURAR", clear: "BORRAR",
                 coachTitle: "Entrenador Interactivo de Aro de Caja:",
                 coachDefault: "¡Haz clic en '👣 Paso' para escuchar el '¡TOC!' de madera en el aro de metal en los tiempos 2 y 4!",
@@ -1227,7 +1247,7 @@
                 title: "Lezione 23: Bordo Rullante", subtitle: "Il suono secco del legno sul bordo di metallo ('TOC!')",
                 tempo: "Tempo", play: "SUONA", stop: "FERMA", stepBtn: "Passo", speed: "Velocità (BPM)", click: "Click",
                 slow: "Ballata", med: "Bruno Mars", fast: "The Police", iphone: "📱 Audio iOS: Disattiva Silenzioso",
-                stage1Btn: "Fase 1: Orologio di Legno (Cassa 1 e 3 + Bordo 2 e 4)", stage2Btn: "Fase 2: Groove Pop / Ballata (Cassa su 1, 2e, 3)",
+                stage1Btn: "Fase 1: Orologio di Legno (1 e 3)", stage2Btn: "Fase 2: Strofa Pop sul Bordo (1, 2e, 3)", stage3Btn: "Ritornello: Passa alla Pelle (TA!)",
                 restore: "RIPRISTINA", clear: "CANCELLA",
                 coachTitle: "Allenatore Interattivo Rim Click:",
                 coachDefault: "Clicca su '👣 Passo' per sentire il 'TOC!' sul bordo di metallo sui tempi 2 e 4!",
@@ -1282,7 +1302,7 @@
                 title: "Lektion 23: Rim Click", subtitle: "Der holzige 'KLICK!'-Sound am Metallrand der Snare!",
                 tempo: "Takt", play: "SPIELEN", stop: "STOPP", stepBtn: "Schritt", speed: "Tempo (BPM)", click: "Klick",
                 slow: "Ballade", med: "Bruno Mars", fast: "The Police", iphone: "📱 iOS Ton: Stummmodus aus",
-                stage1Btn: "Stufe 1: Holzuhr (Bassdrum 1 & 3 + Rand 2 & 4)", stage2Btn: "Stufe 2: Pop-Balladen-Groove (Kick auf 1, 2e, 3)",
+                stage1Btn: "Stufe 1: Holzuhr (1 & 3)", stage2Btn: "Stufe 2: Pop-Strophe am Rand (1, 2e, 3)", stage3Btn: "Refrain: Wechsel aufs Fell (PA!)",
                 restore: "WIEDERHERSTELLEN", clear: "LÖSCHEN",
                 coachTitle: "Interaktiver Rim-Click-Trainer:",
                 coachDefault: "Klicke auf '👣 Schritt', um das holzige 'KLICK!' am Metallrand auf 2 und 4 zu hören!",
@@ -1370,6 +1390,7 @@
             
             safeSetText('t-stage1Btn', t.stage1Btn);
             safeSetText('t-stage2Btn', t.stage2Btn);
+            safeSetText('t-stage3Btn', t.stage3Btn);
             safeSetText('t-restore', t.restore);
             safeSetText('t-clear', t.clear);
             
@@ -1438,6 +1459,18 @@
 
             render();
         }
+
+        window.initPage = initPage;
+        window.setLanguage = setLanguage;
+        window.setBPM = setBPM;
+        window.toggleMetronome = toggleMetronome;
+        window.stepForward = stepForward;
+        window.loadStage1 = loadStage1;
+        window.loadLesson23 = loadLesson23;
+        window.loadChorus = loadChorus;
+        window.clearGrid = clearGrid;
+        window.loadCustomInfographic = loadCustomInfographic;
+        window.resetInfographic = resetInfographic;
     </script>
 </body>
 </html>
